@@ -61,7 +61,9 @@ const Checkout = () => {
                 setStep(2);
             }
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to place order. Please try again.');
+            const errorMessage = err.response?.data?.message || err.response?.statusText || err.message || 'Failed to place order. Please try again.';
+            setError(errorMessage);
+            console.error('[Checkout Error]:', err);
         } finally {
             setLoading(false);
         }
