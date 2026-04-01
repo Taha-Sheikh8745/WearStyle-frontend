@@ -85,9 +85,9 @@ const ProductCard = ({ product, index }) => {
                     <span className="text-[10px] text-gray-400">({product.numReviews || 0})</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
-                    <span className="text-sm font-medium">${product.price}</span>
+                    <span className="text-sm font-medium">Rs. {product.price}</span>
                     {product.comparePrice && (
-                        <span className="text-xs text-gray-400 line-through">${product.comparePrice}</span>
+                        <span className="text-xs text-gray-400 line-through">Rs. {product.comparePrice}</span>
                     )}
                 </div>
             </Link>
@@ -157,23 +157,6 @@ const Shop = () => {
 
     return (
         <div className="pt-20 min-h-screen bg-white">
-            {/* Hero Header */}
-            <div className="relative h-48 md:h-56 flex items-center justify-center overflow-hidden bg-primary">
-                <div
-                    className="absolute inset-0 bg-cover bg-center opacity-20"
-                    style={{ backgroundImage: "url('https://images.unsplash.com/photo-1550614000-4b95d4662d06?q=80&w=2070')" }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-primary" />
-                <div className="relative z-10 text-center text-white">
-                    <p className="text-accent text-[11px] uppercase tracking-[0.3em] mb-3">All Pieces</p>
-                    <h1 className="text-4xl md:text-5xl font-serif">Our Collections</h1>
-                    <div className="flex items-center justify-center gap-3 mt-4">
-                        <div className="h-[1px] w-12 bg-accent/50" />
-                        <div className="w-1.5 h-1.5 bg-accent rounded-full" />
-                        <div className="h-[1px] w-12 bg-accent/50" />
-                    </div>
-                </div>
-            </div>
 
             <div className="container mx-auto px-4 md:px-8 py-10">
                 {/* Toolbar */}
@@ -216,7 +199,7 @@ const Shop = () => {
                                     <h4 className="text-[11px] uppercase tracking-widest mb-4 font-medium text-gray-500">Price Range</h4>
                                     <input type="range" min="0" max="500" value={priceRange[1]} onChange={e => setPriceRange([0, Number(e.target.value)])} className="w-full accent-accent" />
                                     <div className="flex justify-between text-xs text-gray-400 mt-2">
-                                        <span>$0</span><span className="font-medium text-primary">${priceRange[1]}</span>
+                                        <span>Rs. 0</span><span className="font-medium text-primary">Rs. {priceRange[1]}</span>
                                     </div>
                                 </div>
 

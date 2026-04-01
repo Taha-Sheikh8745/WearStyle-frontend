@@ -1,53 +1,6 @@
 import { Link } from 'react-router-dom';
 
-// ── Marquee Ticker ──────────────────────────────────────────
-const TICKER_ITEMS = [
-    '✦ Free Shipping on Orders Over $100',
-    '✦ New Chikankari Collection 2026',
-    '✦ Handcrafted with Love',
-    '✦ Authentic Luxury Fabrics',
-    '✦ Easy Returns Within 14 Days',
-    '✦ Exclusive Bridal Couture',
-];
 
-const MarqueeTicker = () => (
-    <div className="bg-primary text-white py-2.5 overflow-hidden">
-        <div className="marquee-wrapper">
-            <div className="marquee-track">
-                {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
-                    <span key={i} className="text-[11px] uppercase tracking-[0.2em] px-8 opacity-90">{item}</span>
-                ))}
-            </div>
-        </div>
-    </div>
-);
-
-// ── Stats Section ───────────────────────────────────────────
-const STATS = [
-    { number: '500+', label: 'Luxury Pieces' },
-    { number: '10K+', label: 'Happy Clients' },
-    { number: '12+', label: 'Years of Craft' },
-    { number: '100%', label: 'Authentic Fabric' },
-];
-
-const StatsSection = () => (
-    <section className="py-16 bg-primary text-white relative overflow-hidden">
-        {/* Decorative gold diagonal stripe */}
-        <div className="absolute inset-0 opacity-5">
-            <div className="absolute top-0 left-0 w-full h-full" style={{ background: 'repeating-linear-gradient(45deg, transparent, transparent 80px, rgba(194,166,122,0.3) 80px, rgba(194,166,122,0.3) 82px)' }}></div>
-        </div>
-        <div className="container mx-auto px-4 md:px-8 relative z-10">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-                {STATS.map((s, i) => (
-                    <div key={i} className="animate-fade-in-up" style={{ animationDelay: `${i * 0.15}s`, animationFillMode: 'both' }}>
-                        <p className="text-gradient text-4xl md:text-5xl font-serif mb-2">{s.number}</p>
-                        <p className="text-xs uppercase tracking-[0.2em] text-white/60">{s.label}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
-    </section>
-);
 
 // ── Category Card ───────────────────────────────────────────
 const CategoryCard = ({ to, imageUrl, title, height = 'h-[550px]', extra = '' }) => (
@@ -89,9 +42,6 @@ const SkeletonCard = () => (
 const Home = () => {
     return (
         <div>
-            {/* Marquee Ticker */}
-            <MarqueeTicker />
-
             {/* ── Hero ──────────────────────────────────────── */}
             <div className="relative h-screen w-full flex items-center justify-center overflow-hidden">
                 {/* Main image */}
@@ -117,30 +67,17 @@ const Home = () => {
                         WearStylewith<br />
                         <em className="not-italic text-gradient">Imtisall</em>
                     </h1>
-                    <p
-                        className="text-sm md:text-base font-light tracking-widest max-w-md opacity-90 animate-fade-in-up delay-400"
+                    <Link
+                        to="/shop"
+                        className="mt-8 px-10 py-4 border border-white/50 text-white text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 animate-fade-in-up delay-300 backdrop-blur-sm"
                         style={{ animationFillMode: 'both' }}
                     >
-                        Where craftsmanship meets couture
-                    </p>
-                    <div
-                        className="flex flex-col sm:flex-row gap-4 mt-4 animate-fade-in-up delay-500"
-                        style={{ animationFillMode: 'both' }}
-                    >
-                        <Link to="/shop?category=new" className="btn-accent px-10 py-4">
-                            Shop the Collection
-                        </Link>
-                        <Link to="/shop" className="glass-card text-white px-10 py-4 uppercase tracking-widest text-xs font-medium hover:bg-white/20 transition-all duration-300">
-                            Explore All
-                        </Link>
-                    </div>
+                        Explore All
+                    </Link>
+
                 </div>
 
-                {/* Scroll indicator */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-pulse-soft">
-                    <span className="text-white/50 text-[10px] uppercase tracking-[0.3em]">Scroll</span>
-                    <div className="w-[1px] h-12 bg-gradient-to-b from-white/50 to-transparent animate-float" />
-                </div>
+
             </div>
 
             {/* Marquee Brand Text */}
@@ -200,8 +137,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* ── Stats ─────────────────────────────────────── */}
-            <StatsSection />
+
 
             {/* ── New Arrivals ───────────────────────────────── */}
             <section className="py-24 bg-secondary">
@@ -228,25 +164,6 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* ── Feature Strip ─────────────────────────────── */}
-            <section className="py-16 bg-white border-y border-gray-100">
-                <div className="container mx-auto px-4 md:px-8">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                        {[
-                            { icon: '🚚', title: 'Free Shipping', desc: 'On orders above $100' },
-                            { icon: '✦', title: 'Authentic Luxury', desc: 'Handpicked premium fabrics' },
-                            { icon: '↩', title: 'Easy Returns', desc: '14-day hassle-free policy' },
-                            { icon: '🔒', title: 'Secure Payments', desc: 'Stripe & PayPal protected' },
-                        ].map((f, i) => (
-                            <div key={i} className="flex flex-col items-center gap-3 group">
-                                <span className="text-3xl group-hover:animate-float transition-all">{f.icon}</span>
-                                <h4 className="text-xs uppercase tracking-widest font-medium">{f.title}</h4>
-                                <p className="text-xs text-gray-400">{f.desc}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
 
             {/* ── Full-Width CTA Banner ──────────────────────── */}
             <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">

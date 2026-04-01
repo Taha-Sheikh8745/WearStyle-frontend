@@ -150,7 +150,7 @@ const Dashboard = () => {
                                                     <span className={`text-xs border px-3 py-1 rounded-full ${STATUS_COLORS[order.orderStatus] || 'bg-gray-50'}`}>
                                                         {order.orderStatus}
                                                     </span>
-                                                    <span className="font-medium text-sm">${order.totalPrice.toFixed(2)}</span>
+                                                    <span className="font-medium text-sm">Rs. {order.totalPrice.toFixed(2)}</span>
                                                 </div>
                                             </div>
                                             <div className="text-sm text-gray-600 flex flex-col gap-1">
@@ -184,7 +184,7 @@ const Dashboard = () => {
                                                 <img src={item.images?.[0]?.url} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                             </div>
                                             <p className="text-xs font-medium truncate">{item.title}</p>
-                                            <p className="text-xs text-gray-400">${item.price}</p>
+                                            <p className="text-xs text-gray-400">Rs. {item.price}</p>
                                         </Link>
                                     ))}
                                 </div>

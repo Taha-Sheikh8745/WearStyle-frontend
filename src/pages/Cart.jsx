@@ -51,7 +51,7 @@ const Cart = () => {
 
                                 {/* Price */}
                                 <div className="hidden md:flex md:col-span-2 justify-center">
-                                    <span className="text-sm">${item.price}</span>
+                                    <span className="text-sm">Rs. {item.price}</span>
                                 </div>
 
                                 {/* Quantity */}
@@ -65,7 +65,7 @@ const Cart = () => {
 
                                 {/* Total */}
                                 <div className="hidden md:flex md:col-span-2 justify-end">
-                                    <span className="text-sm font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                                    <span className="text-sm font-medium">Rs. {(item.price * item.quantity).toFixed(2)}</span>
                                 </div>
                             </div>
                         ))}
@@ -78,21 +78,21 @@ const Cart = () => {
                             <div className="flex flex-col gap-3 mb-6 text-sm">
                                 <div className="flex justify-between">
                                     <span className="text-gray-500">Subtotal</span>
-                                    <span className="font-medium">${cartTotal.toFixed(2)}</span>
+                                    <span className="font-medium">Rs. {cartTotal.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-gray-500">Shipping</span>
-                                    <span className="font-medium">{cartTotal > 100 ? 'FREE' : '$15.00'}</span>
+                                    <span className="font-medium">{cartTotal > 100 ? 'FREE' : 'Rs. 15.00'}</span>
                                 </div>
                                 <div className="flex justify-between text-xs text-gray-400">
                                     <span>Estimated Tax (5%)</span>
-                                    <span>${(cartTotal * 0.05).toFixed(2)}</span>
+                                    <span>Rs. {(cartTotal * 0.05).toFixed(2)}</span>
                                 </div>
                             </div>
                             <div className="border-t border-gray-100 pt-4 flex justify-between mb-8">
                                 <span className="font-medium">Total</span>
                                 <span className="font-medium text-lg">
-                                    ${(cartTotal + (cartTotal > 100 ? 0 : 15) + cartTotal * 0.05).toFixed(2)}
+                                    Rs. {(cartTotal + (cartTotal > 100 ? 0 : 15) + cartTotal * 0.05).toFixed(2)}
                                 </span>
                             </div>
                             <Link to="/checkout" className="btn-primary block text-center w-full">Proceed to Checkout</Link>

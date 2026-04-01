@@ -185,7 +185,7 @@ const AdminProducts = () => {
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="text-xs uppercase tracking-wide text-gray-500 mb-1.5 block">Price ($) *</label>
+                                    <label className="text-xs uppercase tracking-wide text-gray-500 mb-1.5 block">Price (Rs) *</label>
                                     <input required type="number" min="0" value={form.price} onChange={e => setForm(f => ({ ...f, price: e.target.value }))} className="border border-gray-200 w-full p-3 text-sm outline-none focus:border-primary transition-colors" placeholder="189" />
                                 </div>
                                 <div>
@@ -296,7 +296,7 @@ const AdminProducts = () => {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-500">{product.category?.name || 'Uncategorized'}</td>
-                                    <td className="px-6 py-4 text-sm font-medium">${product.price}</td>
+                                    <td className="px-6 py-4 text-sm font-medium">Rs. {product.price}</td>
                                     <td className="px-6 py-4">
                                         <span className={`text-xs px-2 py-1 rounded ${product.stock < 10 ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}`}>
                                             {product.stock}

@@ -107,7 +107,7 @@ const AdminOrders = () => {
                                     <td className="px-6 py-4 text-sm text-gray-500">
                                         {order.items.length} {order.items.length === 1 ? 'item' : 'items'}
                                     </td>
-                                    <td className="px-6 py-4 text-sm font-medium">${order.totalPrice}</td>
+                                    <td className="px-6 py-4 text-sm font-medium">Rs. {order.totalPrice}</td>
                                     <td className="px-6 py-4">
                                         <select
                                             value={order.orderStatus}

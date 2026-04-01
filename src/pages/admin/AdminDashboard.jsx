@@ -53,7 +53,7 @@ const AdminDashboard = () => {
     );
 
     const STAT_CARDS = [
-        { label: 'Total Revenue', value: `$${stats?.revenue?.toLocaleString() || 0}`, icon: DollarSign, color: 'bg-green-50 text-green-600' },
+        { label: 'Total Revenue', value: `Rs. ${stats?.revenue?.toLocaleString() || 0}`, icon: DollarSign, color: 'bg-green-50 text-green-600' },
         { label: 'Total Orders', value: stats?.orders || 0, icon: ShoppingBag, color: 'bg-blue-50 text-blue-600' },
         { label: 'Total Products', value: stats?.products || 0, icon: Package, color: 'bg-purple-50 text-purple-600' },
         // { label: 'Total Users', value: stats?.users || 0, icon: Users, color: 'bg-orange-50 text-orange-600' },
@@ -123,7 +123,7 @@ const AdminDashboard = () => {
                                 <tr key={order._id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
                                     <td className="px-6 py-4 text-sm font-mono text-gray-500">{order._id}</td>
                                     <td className="px-6 py-4 text-sm font-medium">{order.user?.name}</td>
-                                    <td className="px-6 py-4 text-sm">${order.totalPrice}</td>
+                                    <td className="px-6 py-4 text-sm">Rs. {order.totalPrice}</td>
                                     <td className="px-6 py-4">
                                         <span className={`text-xs px-3 py-1 rounded-full font-medium ${STATUS_COLORS[order.orderStatus]}`}>
                                             {order.orderStatus}

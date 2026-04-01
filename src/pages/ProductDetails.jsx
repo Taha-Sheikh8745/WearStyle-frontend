@@ -131,13 +131,13 @@ const ProductDetails = () => {
 
                         {/* Price */}
                         <div className="flex items-center gap-4 mb-8">
-                            <span className="text-2xl font-medium">${product.price}</span>
+                            <span className="text-2xl font-medium">Rs. {product.price}</span>
                             {product.comparePrice && (
-                                <span className="text-lg text-gray-400 line-through">${product.comparePrice}</span>
+                                <span className="text-lg text-gray-400 line-through">Rs. {product.comparePrice}</span>
                             )}
                             {product.comparePrice && (
                                 <span className="text-sm bg-green-50 text-green-700 px-2 py-0.5 rounded">
-                                    Save ${product.comparePrice - product.price}
+                                    Save Rs. {product.comparePrice - product.price}
                                 </span>
                             )}
                         </div>

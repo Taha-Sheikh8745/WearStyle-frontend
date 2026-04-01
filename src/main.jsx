@@ -8,6 +8,9 @@ import { WishlistProvider } from './context/WishlistContext'
 import axios from 'axios'
 import { STATIC_PRODUCTS, STATIC_CATEGORIES, STATIC_USER } from './staticData'
 
+// Set default base URL for production API calls
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || '';
+
 // Axios Request Interceptor
 axios.interceptors.request.use(
   (config) => {
@@ -26,7 +29,7 @@ axios.interceptors.response.use(
   (error) => {
     const { config } = error;
     // Intercept internal API calls for static demo
-    if (config && config.url.startsWith('/api')) {
+    if (config && config.url && config.url.includes('/api')) {
       console.warn(`Static Mode: Intercepting ${config.url}`);
 
       // Categories API
