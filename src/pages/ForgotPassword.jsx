@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, ArrowLeft } from 'lucide-react';
-import axios from 'axios';
+import api from '../services/api';
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
@@ -18,7 +18,7 @@ const ForgotPassword = () => {
 
         try {
             console.log('Sending forgot password request for:', email);
-            const { data } = await axios.post('/api/auth/forgot-password', { email });
+            const { data } = await api.post('/api/auth/forgot-password', { email });
             console.log('Forgot password response:', data);
             setSuccess(data.message);
             setTimeout(() => {

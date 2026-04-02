@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { Eye, EyeOff, ShieldCheck } from 'lucide-react';
-import axios from 'axios';
+import api from '../services/api';
 
 const Login = () => {
     const { login } = useContext(AuthContext);
@@ -24,7 +24,7 @@ const Login = () => {
 
         try {
             if (isVerifying) {
-                const { data } = await axios.post('/api/auth/verify-email', {
+                const { data } = await api.post('/api/auth/verify-email', {
                     email: form.email,
                     otp: form.otp
                 });
@@ -32,7 +32,7 @@ const Login = () => {
                 setSuccess('Email verified successfully!');
                 setTimeout(() => navigate(data.user.role === 'admin' ? '/admin' : '/'), 1500);
             } else if (isLogin) {
-                const { data } = await axios.post('/api/auth/login', {
+                const { data } = await api.post('/api/auth/login', {
                     email: form.email,
                     password: form.password
                 });
@@ -44,7 +44,7 @@ const Login = () => {
                     setLoading(false);
                     return;
                 }
-                const { data } = await axios.post('/api/auth/register', {
+                const { data } = await api.post('/api/auth/register', {
                     firstName: form.firstName,
                     lastName: form.lastName,
                     email: form.email,
@@ -67,7 +67,7 @@ const Login = () => {
     const handleResendOTP = async () => {
         try {
             setLoading(true);
-            const { data } = await axios.post('/api/auth/resend-otp', { email: form.email });
+            const { data } = await api.post('/api/auth/resend-otp', { email: form.email });
             setSuccess(data.message);
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to resend OTP.');

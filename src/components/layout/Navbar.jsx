@@ -4,7 +4,7 @@ import { CartContext } from '../../context/CartContext';
 import { AuthContext } from '../../context/AuthContext';
 import logo from '../../assets/new.jpg';
 import { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 
 
 const Navbar = () => {
@@ -32,7 +32,7 @@ const Navbar = () => {
 
     const fetchCategories = async () => {
         try {
-            const { data } = await axios.get('/api/categories');
+            const { data } = await api.get('/api/categories');
             const allCats = data.categories || [];
 
             // Filter categories intended for navbar

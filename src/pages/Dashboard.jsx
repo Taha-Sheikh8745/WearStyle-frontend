@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import { Package, Heart, User, LogOut, ShoppingBag } from 'lucide-react';
 import { WishlistContext } from '../context/WishlistContext';
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 // Demo order data
 const STATUS_COLORS = {
@@ -34,9 +34,7 @@ const Dashboard = () => {
         const fetchOrders = async () => {
             if (!token) return;
             try {
-                const { data } = await axios.get('/api/orders/mine', {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                const { data } = await api.get('/api/orders/mine');
                 console.log('Fetched orders:', data.orders);
                 setOrders(data.orders);
             } catch (err) {
@@ -60,9 +58,7 @@ const Dashboard = () => {
         setLoading(true);
 
         try {
-            const { data } = await axios.put('/api/auth/update-password', passForm, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const { data } = await api.put('/api/auth/update-password', passForm);
             setSuccess(data.message);
             setPassForm({ currentPassword: '', newPassword: '', confirmNewPassword: '' });
         } catch (err) {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { KeyRound, Eye, EyeOff, ShieldCheck } from 'lucide-react';
-import axios from 'axios';
+import api from '../services/api';
 
 const ResetPassword = () => {
     const location = useLocation();
@@ -37,7 +37,7 @@ const ResetPassword = () => {
         setLoading(true);
 
         try {
-            const { data } = await axios.post('/api/auth/reset-password', {
+            const { data } = await api.post('/api/auth/reset-password', {
                 email,
                 otp,
                 password

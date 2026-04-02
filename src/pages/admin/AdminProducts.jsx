@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Pencil, Trash2, Plus, Search, AlertCircle, Loader2 } from 'lucide-react';
-import axios from 'axios';
+import api from '../../services/api';
 import { AuthContext } from '../../context/AuthContext';
 
 const AdminProducts = () => {
@@ -26,8 +26,8 @@ const AdminProducts = () => {
         try {
             setLoading(true);
             const [productsRes, categoriesRes] = await Promise.all([
-                axios.get('/api/products'),
-                axios.get('/api/categories')
+                api.get('/api/products'),
+                api.get('/api/categories')
             ]);
             setProducts(productsRes.data.products || productsRes.data);
             setCategories(categoriesRes.data.categories || categoriesRes.data);
@@ -44,10 +44,7 @@ const AdminProducts = () => {
     const handleDelete = async (id) => {
         if (!window.confirm('Are you sure you want to delete this product?')) return;
         try {
-            const token = localStorage.getItem('token');
-            await axios.delete(`/api/products/${id}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            await api.delete(`/api/products/${id}`);
             setProducts(ps => ps.filter(p => p._id !== id));
         } catch (err) {
             alert('Failed to delete product.');
@@ -109,8 +106,7 @@ const AdminProducts = () => {
         e.preventDefault();
         setIsSubmitting(true);
         try {
-            const token = localStorage.getItem('token');
-            const config = { headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` } };
+            const config = { headers: { 'Content-Type': 'multipart/form-data' } };
 
             const formData = new FormData();
             Object.keys(form).forEach(key => {
@@ -126,10 +122,10 @@ const AdminProducts = () => {
             });
 
             if (editProduct) {
-                const { data } = await axios.put(`/api/products/${editProduct._id}`, formData, config);
+                const { data } = await api.put(`/api/products/${editProduct._id}`, formData, config);
                 setProducts(ps => ps.map(p => p._id === editProduct._id ? data : p));
             } else {
-                const { data } = await axios.post('/api/products', formData, config);
+                const { data } = await api.post('/api/products', formData, config);
                 setProducts(ps => [...ps, data]);
             }
             resetForm();

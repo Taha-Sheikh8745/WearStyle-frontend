@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Heart, ShoppingBag, Star, ChevronLeft, ChevronRight, Loader2, ArrowLeft } from 'lucide-react';
 import { CartContext } from '../context/CartContext';
 import { WishlistContext } from '../context/WishlistContext';
-import axios from 'axios';
+import api from '../services/api';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -23,7 +23,7 @@ const ProductDetails = () => {
         const fetchProduct = async () => {
             setLoading(true);
             try {
-                const { data } = await axios.get(`/api/products/${id}`);
+                const { data } = await api.get(`/api/products/${id}`);
                 setProduct(data.product);
             } catch (err) {
                 console.error('Error fetching product details:', err);

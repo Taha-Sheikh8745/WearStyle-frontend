@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import axios from 'axios';
+import api from '../services/api';
 
 const STEPS = ['Shipping', 'Review', 'Confirmation'];
 
@@ -50,9 +50,7 @@ const Checkout = () => {
                 paymentMethod
             };
 
-            const { data } = await axios.post('/api/orders', orderData, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const { data } = await api.post('/api/orders', orderData);
 
             if (data.success) {
                 setOrderId(data.order.orderId || data.order._id);
