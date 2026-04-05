@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import Contact from './pages/Contact';
 
 // Admin Pages
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -23,7 +24,7 @@ import AddProduct from './pages/admin/AddProduct';
 import EditProduct from './pages/admin/EditProduct';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminUsers from './pages/admin/AdminUsers';
-import AdminCategories from './pages/admin/AdminCategories';
+import AdminContacts from './pages/admin/AdminContacts';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password" element={<ResetPassword />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="contact-us" element={<Contact />} />
         </Route>
 
         {/* Admin Routes */}
@@ -51,7 +53,7 @@ function App() {
             <Route path="edit-product/:id" element={<EditProduct />} />
             <Route path="orders" element={<AdminOrders />} />
             <Route path="users" element={<AdminUsers />} />
-            <Route path="categories" element={<AdminCategories />} />
+            <Route path="contacts" element={<AdminContacts />} />
           </Route>
         </Route>
       </Routes>

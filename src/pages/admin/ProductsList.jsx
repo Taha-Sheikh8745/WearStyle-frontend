@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Pencil, Trash2, Plus, Search, Filter, Loader2, ChevronRight, Eye } from 'lucide-react';
 import productService from '../../services/productService';
 import toast from 'react-hot-toast';
+import { STATIC_CATEGORIES, getCategoryName, getFlattenedCategories } from '../../constants/categories';
 import { motion } from 'framer-motion';
 
 const ProductsList = () => {
@@ -15,7 +16,8 @@ const ProductsList = () => {
 
     useEffect(() => {
         fetchProducts();
-        fetchCategories();
+        const flattened = getFlattenedCategories();
+        setCategories(flattened);
     }, []);
 
     const fetchProducts = async () => {
@@ -30,14 +32,7 @@ const ProductsList = () => {
         }
     };
 
-    const fetchCategories = async () => {
-        try {
-            const data = await productService.getCategories();
-            setCategories(data.categories || data);
-        } catch (error) {
-            console.error('Failed to load categories');
-        }
-    };
+
 
     const handleDelete = async (id) => {
         if (!window.confirm('Delete this product permanently?')) return;
@@ -53,8 +48,7 @@ const ProductsList = () => {
 
     const filteredProducts = products.filter(p => {
         const matchesSearch = p.title.toLowerCase().includes(search.toLowerCase());
-        const matchesCategory = selectedCategory === 'All' || 
-                               (p.category && (p.category.name === selectedCategory || p.category._id === selectedCategory));
+        const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
         return matchesSearch && matchesCategory;
     });
 
@@ -108,7 +102,7 @@ const ProductsList = () => {
                     >
                         <option value="All">All Categories</option>
                         {categories.map(cat => (
-                            <option key={cat._id} value={cat.name}>{cat.name}</option>
+                            <option key={cat._id} value={cat._id}>{cat.name}</option>
                         ))}
                     </select>
                 </div>
@@ -150,7 +144,7 @@ const ProductsList = () => {
                                         </div>
                                     </td>
                                     <td className="px-8 py-6">
-                                        <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">{product.category?.name || 'Unset'}</span>
+                                        <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">{getCategoryName(product.category) || 'Unset'}</span>
                                     </td>
                                     <td className="px-8 py-6">
                                         <span className="text-sm font-bold text-primary">Rs. {product.price.toLocaleString()}</span>

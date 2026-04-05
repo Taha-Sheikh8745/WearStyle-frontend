@@ -34,11 +34,6 @@ const productService = {
         const { data } = await api.delete(`/api/products/${id}`);
         return data;
     },
-
-    getCategories: async () => {
-        const { data } = await api.get('/api/categories');
-        return data;
-    },
 };
 
 export default productService;

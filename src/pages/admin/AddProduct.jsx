@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Plus, X, Upload, CheckCircle2, AlertCircle, Loader2, ChevronLeft, Image as ImageIcon } from 'lucide-react';
 import productService from '../../services/productService';
 import toast from 'react-hot-toast';
+import { getFlattenedCategories } from '../../constants/categories';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const CATEGORIES = ['Lawn', 'Pret', 'Formal', 'Unstitched', 'Sale'];
@@ -26,21 +27,12 @@ const AddProduct = () => {
     const [previews, setPreviews] = useState([]);
 
     useEffect(() => {
-        fetchCategories();
-    }, []);
-
-    const fetchCategories = async () => {
-        try {
-            const data = await productService.getCategories();
-            const fetchedCats = data.categories || data;
-            setCategories(fetchedCats);
-            if (fetchedCats.length > 0) {
-                setForm(prev => ({ ...prev, category: fetchedCats[0]._id }));
-            }
-        } catch (error) {
-            console.error('Failed to fetch categories');
+        const flattened = getFlattenedCategories();
+        setCategories(flattened);
+        if (flattened.length > 0) {
+            setForm(prev => ({ ...prev, category: flattened[0]._id }));
         }
-    };
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;

@@ -4,6 +4,7 @@ import { Heart, ShoppingBag, Star, ChevronLeft, ChevronRight, Loader2, ArrowLeft
 import { CartContext } from '../context/CartContext';
 import { WishlistContext } from '../context/WishlistContext';
 import api from '../services/api';
+import { getCategoryName } from '../constants/categories';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -68,7 +69,7 @@ const ProductDetails = () => {
                 <nav className="text-xs text-gray-400 mb-8 uppercase tracking-wide flex items-center gap-2">
                     <Link to="/" className="hover:text-primary transition-colors">Home</Link>
                     <span>/</span>
-                    <Link to="/shop" className="hover:text-primary transition-colors">Shop</Link>
+                    <Link to={`/shop?category=${product.category}`} className="hover:text-primary transition-colors">{getCategoryName(product.category)}</Link>
                     <span>/</span>
                     <span className="text-primary">{product.title}</span>
                 </nav>
@@ -116,7 +117,7 @@ const ProductDetails = () => {
 
                     {/* Product Info */}
                     <div className="flex flex-col">
-                        <p className="text-xs uppercase tracking-widest text-gray-400 mb-2">{product.category?.name}</p>
+                        <p className="text-xs uppercase tracking-widest text-gray-400 mb-2">{getCategoryName(product.category)}</p>
                         <h1 className="text-3xl md:text-4xl font-serif mb-4">{product.title}</h1>
 
                         {/* Rating */}

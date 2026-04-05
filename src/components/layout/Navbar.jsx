@@ -4,13 +4,13 @@ import { CartContext } from '../../context/CartContext';
 import { AuthContext } from '../../context/AuthContext';
 import logo from '../../assets/new.jpg';
 import { useState, useContext, useEffect } from 'react';
-import api from '../../services/api';
+import { STATIC_CATEGORIES } from '../../constants/categories';
 
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState(STATIC_CATEGORIES);
     const location = useLocation();
     const navigate = useNavigate();
     const { cartCount } = useContext(CartContext);
@@ -26,42 +26,8 @@ const Navbar = () => {
 
         window.addEventListener('scroll', handleScroll);
         handleScroll(); // Check on initial load
-        fetchCategories();
         return () => window.removeEventListener('scroll', handleScroll);
     }, [user]); // Re-fetch on login/logout
-
-    const fetchCategories = async () => {
-        try {
-            const { data } = await api.get('/api/categories');
-            const allCats = data.categories || [];
-
-            // Filter categories intended for navbar
-            const navCats = allCats.filter(c => c.showInNavbar);
-
-            // Build hierarchy
-            const structured = navCats.filter(c => {
-                const parentId = typeof c.parent === 'object' ? c.parent?._id : c.parent;
-                if (!parentId) return true;
-                const parentInNav = navCats.find(p => p._id === parentId);
-                return !parentInNav;
-            }).map(parent => {
-                const children = navCats.filter(child => {
-                    const childParentId = typeof child.parent === 'object' ? child.parent?._id : child.parent;
-                    return childParentId === parent._id;
-                });
-                return {
-                    ...parent,
-                    children: children.sort((a, b) => (a.order || 0) - (b.order || 0))
-                };
-            });
-
-            // Sort top-level items by order
-            const sorted = structured.sort((a, b) => (a.order || 0) - (b.order || 0));
-            setCategories(sorted);
-        } catch (err) {
-            console.error('Failed to fetch navbar categories:', err);
-        }
-    };
 
     const navbarClasses = `fixed w-full z-50 transition-all duration-300 ${isScrolled || !isHome || isMobileMenuOpen
         ? 'bg-white text-primary shadow-sm py-4'
@@ -119,7 +85,7 @@ const Navbar = () => {
                                 </div>
                             </div>
                         ) : (
-                            <Link key={cat._id} to={`/shop?category=${cat.slug}`} className={`${linkClasses} whitespace-nowrap text-center`}>
+                            <Link key={cat._id} to={cat.isPage ? `/${cat.slug}` : `/shop?category=${cat.slug}`} className={`${linkClasses} whitespace-nowrap text-center`}>
                                 {cat.name}
                             </Link>
                         )
@@ -168,7 +134,7 @@ const Navbar = () => {
                                 </>
                             ) : (
                                 <Link
-                                    to={`/shop?category=${cat.slug}`}
+                                    to={cat.isPage ? `/${cat.slug}` : `/shop?category=${cat.slug}`}
                                     className="text-[10px] uppercase tracking-widest py-2"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >

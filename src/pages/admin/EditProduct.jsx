@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Plus, X, Upload, CheckCircle2, AlertCircle, Loader2, ChevronLeft, Image as ImageIcon, Sparkles } from 'lucide-react';
 import productService from '../../services/productService';
 import toast from 'react-hot-toast';
+import { getFlattenedCategories } from '../../constants/categories';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
@@ -34,15 +35,12 @@ const EditProduct = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const [productData, catData] = await Promise.all([
-                productService.getProductById(id),
-                productService.getCategories()
-            ]);
+            const flattened = getFlattenedCategories();
+            setCategories(flattened);
 
+            const productData = await productService.getProductById(id);
             const p = productData.product || productData;
-            const cats = catData.categories || catData;
             
-            setCategories(cats);
             setForm({
                 title: p.title,
                 description: p.description,

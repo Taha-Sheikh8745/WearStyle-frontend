@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, PlusCircle, List, User, LogOut, ShoppingBag, Settings } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, List, User, LogOut, ShoppingBag, Settings, MessageSquare } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const NAV_ITEMS = [
@@ -7,6 +7,7 @@ const NAV_ITEMS = [
     { title: 'View Products', icon: List, path: '/admin/products' },
     { title: 'Add Product', icon: PlusCircle, path: '/admin/add-product' },
     { title: 'Orders', icon: ShoppingBag, path: '/admin/orders' },
+    { title: 'Messages', icon: MessageSquare, path: '/admin/contacts' },
 ];
 
 const AdminSidebar = ({ user, handleLogout }) => {

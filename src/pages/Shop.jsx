@@ -4,6 +4,7 @@ import { WishlistContext } from '../context/WishlistContext';
 import { CartContext } from '../context/CartContext';
 import { useState, useEffect, useContext } from 'react';
 import productService from '../services/productService';
+import { STATIC_CATEGORIES, getCategoryName } from '../constants/categories';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
@@ -77,7 +78,7 @@ const ProductCard = ({ product, index }) => {
             {/* Info */}
             <div className="text-center">
                 <p className="text-[9px] text-accent uppercase tracking-[0.3em] mb-1.5 font-bold">
-                    {product.category?.name || 'Artisanal Collection'}
+                    {getCategoryName(product.category)}
                 </p>
                 <Link to={`/product/${product._id}`} className="block group/title">
                     <h3 className="text-sm font-medium tracking-tight mb-2 group-hover/title:text-accent transition-colors duration-300 line-clamp-1 px-2">{product.title}</h3>
@@ -113,21 +114,14 @@ const Shop = () => {
     const [keyword, setKeyword] = useState(urlKeyword);
 
     useEffect(() => {
-        const fetchInitially = async () => {
-            try {
-                const catRes = await productService.getCategories();
-                const allCats = catRes.categories || catRes;
-                setCategories(allCats);
-
-                // Re-sync with URL if category is a slug
-                if (urlCat !== 'All') {
-                    const matchedCat = allCats.find(c => c.slug === urlCat || c._id === urlCat);
-                    if (matchedCat) setSelectedCategory(matchedCat._id);
-                }
-            } catch (err) { console.error('Error fetching categories:', err); }
-        };
-        fetchInitially();
-    }, [searchParams]);
+        // Use static categories instead of fetching from DB
+        setCategories(STATIC_CATEGORIES);
+        
+        // Re-sync with URL
+        if (urlCat !== 'All') {
+            setSelectedCategory(urlCat);
+        }
+    }, [urlCat]);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -227,11 +221,11 @@ const Shop = () => {
                                             >
                                                 Show All
                                             </button>
-                                            {categories.map(cat => (
+                                            {categories.filter(c => !c.isPage).map(cat => (
                                                 <button
-                                                    key={cat._id}
-                                                    onClick={() => setSelectedCategory(cat._id)}
-                                                    className={`text-[11px] text-left uppercase tracking-widest transition-all ${selectedCategory === cat._id ? 'text-accent font-bold translate-x-2' : 'text-gray-400 hover:text-primary hover:translate-x-1'}`}
+                                                    key={cat.slug}
+                                                    onClick={() => setSelectedCategory(cat.slug)}
+                                                    className={`text-[11px] text-left uppercase tracking-widest transition-all ${selectedCategory === cat.slug ? 'text-accent font-bold translate-x-2' : 'text-gray-400 hover:text-primary hover:translate-x-1'}`}
                                                 >
                                                     {cat.name}
                                                 </button>

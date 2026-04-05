@@ -204,7 +204,7 @@ const Login = () => {
                                                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                                             </button>
                                         </div>
-                                        {form.password && form.password.length < 6 && (
+                                        {!isLogin && form.password && form.password.length < 6 && (
                                             <p className="text-[10px] text-red-500 uppercase tracking-wider font-medium animate-fade-in">
                                                 Password must be at least 6 characters
                                             </p>
