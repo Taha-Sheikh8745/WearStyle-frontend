@@ -74,11 +74,6 @@ const AddProduct = () => {
             return;
         }
 
-        if (form.sizes.length === 0) {
-            toast.error('Please select at least one size');
-            return;
-        }
-
         const formData = new FormData();
         Object.keys(form).forEach(key => {
             if (key === 'sizes') {
@@ -99,7 +94,9 @@ const AddProduct = () => {
             toast.success('Creation added to the gallery!', { id: toastId });
             navigate('/admin/products');
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Failed to create product');
+            console.error('[AddProduct] Error:', error.response?.data || error.message);
+            const msg = error.response?.data?.message || error.message || 'Failed to create product';
+            toast.error(`Error: ${msg}`);
         } finally {
             setLoading(false);
         }
@@ -261,7 +258,7 @@ const AddProduct = () => {
 
                         {/* Sizes */}
                         <div>
-                            <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-4 block">Tailoring Sizes</label>
+                            <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-4 block">Tailoring Sizes <span className="text-gray-300 normal-case">(optional — skip for unstitched)</span></label>
                             <div className="flex flex-wrap gap-3">
                                 {SIZES.map(size => (
                                     <button

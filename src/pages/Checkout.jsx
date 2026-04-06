@@ -23,7 +23,7 @@ const Checkout = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const shippingCost = cartTotal > 100 ? 0 : 15;
+    const shippingCost = 350;
     const tax = cartTotal * 0.05;
     const total = cartTotal + shippingCost + tax;
 
