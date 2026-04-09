@@ -145,7 +145,7 @@ const AdminOrders = () => {
                                     </td>
                                     <td className="px-8 py-6">
                                         <div className="flex flex-col">
-                                            <span className="text-sm font-bold text-primary">Rs. {order.totalPrice?.toLocaleString()}</span>
+                                            <span className="text-sm font-bold text-primary">Rs. {Math.round(order.totalPrice)?.toLocaleString()}</span>
                                             <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest">Paid</span>
                                         </div>
                                     </td>

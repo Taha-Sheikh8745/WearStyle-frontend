@@ -94,11 +94,7 @@ const Navbar = () => {
 
                 {/* Icons (Right) */}
                 <div className="flex justify-end gap-4 md:gap-6 flex-none md:flex-1 items-center">
-                    {user?.role === 'admin' && (
-                        <Link to="/admin" className="text-[10px] uppercase tracking-widest font-medium text-accent hover:opacity-70 transition-opacity hidden md:block">
-                            Admin Panel
-                        </Link>
-                    )}
+
                     <Link to={user ? '/dashboard' : '/login'} className="hover:opacity-70 transition-opacity hidden md:block">
                         <User size={20} />
                     </Link>
@@ -144,11 +140,7 @@ const Navbar = () => {
                         </div>
                     ))}
 
-                    {user?.role === 'admin' && (
-                        <Link to="/admin" className="text-[10px] uppercase tracking-widest py-2 border-b border-gray-50 text-accent font-medium" onClick={() => setIsMobileMenuOpen(false)}>
-                            Admin Panel
-                        </Link>
-                    )}
+
                     <Link to={user ? '/dashboard' : '/login'} className="text-[10px] uppercase tracking-widest py-2 flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
                         <User size={16} /> Account
                     </Link>

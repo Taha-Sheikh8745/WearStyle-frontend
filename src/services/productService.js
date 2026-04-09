@@ -34,6 +34,11 @@ const productService = {
         const { data } = await api.delete(`/api/products/${id}`);
         return data;
     },
+
+    addReview: async (productId, reviewData) => {
+        const { data } = await api.post(`/api/products/${productId}/reviews`, reviewData);
+        return data;
+    },
 };
 
 export default productService;

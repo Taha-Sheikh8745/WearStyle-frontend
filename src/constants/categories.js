@@ -10,11 +10,11 @@ export const STATIC_CATEGORIES = [
         name: 'Unstitched',
         slug: 'unstitched',
         children: [
-            { _id: 'u-summer', name: 'Summer wear', slug: 'summer-wear' },
-            { _id: 'u-winter', name: 'Winter wear', slug: 'winter-wear' },
-            { _id: 'u-eid', name: 'Eid collection', slug: 'eid-collection' },
-            { _id: 'u-solids', name: 'solids', slug: 'solids' },
-            { _id: 'u-all', name: 'shop all', slug: 'unstitched' }
+            { _id: 'un-summer', name: 'Summer wear', slug: 'unstitched-summer-wear' },
+            { _id: 'un-winter', name: 'Winter wear', slug: 'unstitched-winter-wear' },
+            { _id: 'un-eid', name: 'Eid collection', slug: 'unstitched-eid-collection' },
+            { _id: 'un-solids', name: 'solids', slug: 'unstitched-solids' },
+            { _id: 'un-all', name: 'shop all', slug: 'unstitched' }
         ]
     },
     {
@@ -22,8 +22,8 @@ export const STATIC_CATEGORIES = [
         name: 'Pret/Stitched',
         slug: 'pret-stitched',
         children: [
-            { _id: 'p-winter', name: 'Winter wear', slug: 'winter-wear' },
-            { _id: 'p-summer', name: 'Summer wear', slug: 'summer-wear' }
+            { _id: 'pret-winter', name: 'Winter wear', slug: 'pret-winter-wear' },
+            { _id: 'pret-summer', name: 'Summer wear', slug: 'pret-summer-wear' }
         ]
     },
     {

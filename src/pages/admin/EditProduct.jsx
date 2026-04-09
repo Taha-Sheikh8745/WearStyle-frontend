@@ -20,7 +20,7 @@ const EditProduct = () => {
         description: '',
         price: '',
         category: '',
-        stock: '',
+        category: '',
         sizes: [],
     });
 
@@ -46,7 +46,7 @@ const EditProduct = () => {
                 description: p.description,
                 price: p.price,
                 category: p.category?._id || p.category,
-                stock: p.stock,
+                category: p.category?._id || p.category,
                 sizes: p.sizes || [],
             });
             setExistingImages(p.images || []);
@@ -135,6 +135,9 @@ const EditProduct = () => {
             </div>
         );
     }
+
+    const selectedCatObj = categories.find(c => c._id === form.category);
+    const isUnstitched = selectedCatObj?.name?.toLowerCase().includes('unstitched');
 
     return (
         <div className="max-w-4xl mx-auto pb-20 animate-fade-in">
@@ -237,7 +240,7 @@ const EditProduct = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                             <div>
                                 <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">Price (PKR)</label>
                                 <div className="relative">
@@ -266,39 +269,30 @@ const EditProduct = () => {
                                     ))}
                                 </select>
                             </div>
-                            <div>
-                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">Stock Level</label>
-                                <input 
-                                    required
-                                    type="number" 
-                                    name="stock"
-                                    value={form.stock}
-                                    onChange={handleInputChange}
-                                    className="w-full py-3 border-b border-gray-100 outline-none focus:border-accent transition-all font-medium text-primary"
-                                />
-                            </div>
                         </div>
 
-                        <div>
-                            <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-4 block">Tailoring Sizes</label>
-                            <div className="flex flex-wrap gap-3">
-                                {SIZES.map(size => (
-                                    <button
-                                        key={size}
-                                        type="button"
-                                        onClick={() => toggleSize(size)}
-                                        className={`
-                                            w-12 h-12 flex items-center justify-center text-[11px] font-bold border transition-all
-                                            ${form.sizes.includes(size)
-                                                ? 'bg-primary text-white border-primary shadow-lg shadow-black/5'
-                                                : 'border-gray-100 text-gray-400 hover:border-accent hover:text-accent'}
-                                        `}
-                                    >
-                                        {size}
-                                    </button>
-                                ))}
+                        {!isUnstitched && (
+                            <div>
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-4 block">Tailoring Sizes</label>
+                                <div className="flex flex-wrap gap-3">
+                                    {SIZES.map(size => (
+                                        <button
+                                            key={size}
+                                            type="button"
+                                            onClick={() => toggleSize(size)}
+                                            className={`
+                                                w-12 h-12 flex items-center justify-center text-[11px] font-bold border transition-all
+                                                ${form.sizes.includes(size)
+                                                    ? 'bg-primary text-white border-primary shadow-lg shadow-black/5'
+                                                    : 'border-gray-100 text-gray-400 hover:border-accent hover:text-accent'}
+                                            `}
+                                        >
+                                            {size}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
+                        )}
 
                         <div className="pt-8 border-t border-gray-50 flex gap-4">
                             <button 

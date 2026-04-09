@@ -64,9 +64,7 @@ const Cart = () => {
                                 </div>
 
                                 {/* Total */}
-                                <div className="hidden md:flex md:col-span-2 justify-end">
-                                    <span className="text-sm font-medium">Rs. {(item.price * item.quantity).toFixed(2)}</span>
-                                </div>
+                                    <span className="text-sm font-medium">Rs. {item.price * item.quantity}</span>
                             </div>
                         ))}
                     </div>
@@ -78,21 +76,17 @@ const Cart = () => {
                             <div className="flex flex-col gap-3 mb-6 text-sm">
                                 <div className="flex justify-between">
                                     <span className="text-gray-500">Subtotal</span>
-                                    <span className="font-medium">Rs. {cartTotal.toFixed(2)}</span>
+                                    <span className="font-medium">Rs. {cartTotal}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-gray-500">Shipping</span>
-                                    <span className="font-medium">Rs. 350.00</span>
-                                </div>
-                                <div className="flex justify-between text-xs text-gray-400">
-                                    <span>Estimated Tax (5%)</span>
-                                    <span>Rs. {(cartTotal * 0.05).toFixed(2)}</span>
+                                    <span className="font-medium">Rs. 350</span>
                                 </div>
                             </div>
-                            <div className="border-t border-gray-100 pt-4 flex justify-between mb-8">
+                             <div className="border-t border-gray-100 pt-4 flex justify-between mb-8">
                                 <span className="font-medium">Total</span>
                                 <span className="font-medium text-lg">
-                                    Rs. {(cartTotal + 350 + (cartTotal * 0.05)).toFixed(2)}
+                                    Rs. {Math.round(cartTotal + 350)}
                                 </span>
                             </div>
                             <Link to="/checkout" className="btn-primary block text-center w-full">Proceed to Checkout</Link>

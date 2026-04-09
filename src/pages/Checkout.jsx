@@ -24,8 +24,7 @@ const Checkout = () => {
     const [error, setError] = useState('');
 
     const shippingCost = 350;
-    const tax = cartTotal * 0.05;
-    const total = cartTotal + shippingCost + tax;
+    const total = cartTotal + shippingCost;
 
     const handleShippingSubmit = (e) => {
         e.preventDefault();
@@ -165,7 +164,7 @@ const Checkout = () => {
                                             <p className="text-sm font-medium">{item.title}</p>
                                             <p className="text-xs text-gray-400 mt-1">Size: {item.selectedSize} · Qty: {item.quantity}</p>
                                         </div>
-                                        <p className="text-sm font-medium">Rs. {(item.price * item.quantity).toFixed(2)}</p>
+                                        <p className="text-sm font-medium">Rs. {item.price * item.quantity}</p>
                                     </div>
                                 ))}
                                 {error && (
@@ -225,16 +224,15 @@ const Checkout = () => {
                                     {cartItems.map(item => (
                                         <div key={`${item._id}-${item.selectedSize}`} className="flex justify-between text-gray-600">
                                             <span className="truncate flex-1 mr-2">{item.title} ×{item.quantity}</span>
-                                            <span className="font-medium">Rs. {(item.price * item.quantity).toFixed(2)}</span>
+                                            <span className="font-medium">Rs. {item.price * item.quantity}</span>
                                         </div>
                                     ))}
                                 </div>
                                 <div className="border-t border-gray-100 pt-4 flex flex-col gap-2 text-sm">
-                                    <div className="flex justify-between"><span className="text-gray-500">Subtotal</span><span>Rs. {cartTotal.toFixed(2)}</span></div>
+                                    <div className="flex justify-between"><span className="text-gray-500">Subtotal</span><span>Rs. {Math.round(cartTotal)}</span></div>
                                     <div className="flex justify-between"><span className="text-gray-500">Shipping</span><span>{shippingCost === 0 ? 'FREE' : `Rs. ${shippingCost}`}</span></div>
-                                    <div className="flex justify-between"><span className="text-gray-500">Tax</span><span>Rs. {tax.toFixed(2)}</span></div>
                                     <div className="flex justify-between font-medium text-base mt-2 pt-3 border-t border-gray-100">
-                                        <span>Total</span><span>Rs. {total.toFixed(2)}</span>
+                                        <span>Total</span><span>Rs. {Math.round(total)}</span>
                                     </div>
                                 </div>
                             </div>

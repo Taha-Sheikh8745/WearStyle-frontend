@@ -84,13 +84,13 @@ const ProductCard = ({ product, index }) => {
                     <h3 className="text-sm font-medium tracking-tight mb-2 group-hover/title:text-accent transition-colors duration-300 line-clamp-1 px-2">{product.title}</h3>
                 </Link>
                 <div className="flex items-center justify-center gap-2 mb-2.5">
-                    <StarRating rating={product.rating || 4.5} />
+                    <StarRating rating={product.rating || 0} />
                     <span className="text-[10px] text-gray-300 font-mono">({product.numReviews || 0})</span>
                 </div>
                 <div className="flex items-center justify-center gap-2.5">
-                    <span className="text-sm font-bold text-primary italic font-serif">Rs. {product.price?.toLocaleString()}</span>
+                    <span className="text-sm font-bold text-primary italic font-serif">Rs. {Math.round(product.price)?.toLocaleString()}</span>
                     {product.comparePrice > 0 && (
-                        <span className="text-xs text-gray-300 line-through font-mono">Rs. {product.comparePrice?.toLocaleString()}</span>
+                        <span className="text-xs text-gray-300 line-through font-mono">Rs. {Math.round(product.comparePrice)?.toLocaleString()}</span>
                     )}
                 </div>
             </div>
@@ -248,7 +248,7 @@ const Shop = () => {
                                             />
                                             <div className="flex justify-between mt-4">
                                                 <span className="text-[10px] text-gray-300 font-mono">Rs. 0</span>
-                                                <span className="text-[10px] text-accent font-bold font-mono tracking-tight">UP TO Rs. {priceRange[1].toLocaleString()}</span>
+                                                <span className="text-[10px] text-accent font-bold font-mono tracking-tight">UP TO Rs. {Math.round(priceRange[1])?.toLocaleString()}</span>
                                             </div>
                                         </div>
                                     </div>

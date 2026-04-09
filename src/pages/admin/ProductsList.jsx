@@ -23,8 +23,8 @@ const ProductsList = () => {
     const fetchProducts = async () => {
         try {
             setLoading(true);
-            const data = await productService.getAllProducts();
-            setProducts(data.products || data);
+            const data = await productService.getAllProducts({ limit: 1000 });
+            setProducts(data.products || (Array.isArray(data) ? data : []));
         } catch (error) {
             toast.error('Failed to fetch products');
         } finally {
@@ -117,7 +117,6 @@ const ProductsList = () => {
                                 <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold">In-Stock Item</th>
                                 <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Category</th>
                                 <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Value</th>
-                                <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold text-center">Inv.</th>
                                 <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold text-right">Actions</th>
                             </tr>
                         </thead>
@@ -148,11 +147,6 @@ const ProductsList = () => {
                                     </td>
                                     <td className="px-8 py-6">
                                         <span className="text-sm font-bold text-primary">Rs. {product.price.toLocaleString()}</span>
-                                    </td>
-                                    <td className="px-8 py-6 text-center">
-                                        <span className={`text-[11px] font-bold px-2 py-1 ${product.stock > 10 ? 'text-green-600 bg-green-50' : 'text-orange-600 bg-orange-50'}`}>
-                                            {product.stock}
-                                        </span>
                                     </td>
                                     <td className="px-8 py-6">
                                         <div className="flex items-center justify-end gap-3 translate-x-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">

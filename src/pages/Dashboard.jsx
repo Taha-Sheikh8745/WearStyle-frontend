@@ -146,7 +146,7 @@ const Dashboard = () => {
                                                     <span className={`text-xs border px-3 py-1 rounded-full ${STATUS_COLORS[order.orderStatus] || 'bg-gray-50'}`}>
                                                         {order.orderStatus}
                                                     </span>
-                                                    <span className="font-medium text-sm">Rs. {order.totalPrice.toFixed(2)}</span>
+                                                    <span className="font-medium text-sm">Rs. {Math.round(order.totalPrice)}</span>
                                                 </div>
                                             </div>
                                             <div className="text-sm text-gray-600 flex flex-col gap-1">
