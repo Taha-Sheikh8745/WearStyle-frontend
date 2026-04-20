@@ -49,7 +49,8 @@ const AdminOrders = () => {
 
     const filteredOrders = orders.filter(o => {
         const matchesSearch = 
-            (o.user?.name?.toLowerCase().includes(search.toLowerCase())) ||
+            (o.shippingAddress?.name?.toLowerCase().includes(search.toLowerCase())) ||
+            (o.shippingAddress?.email?.toLowerCase().includes(search.toLowerCase())) ||
             (o._id?.toLowerCase().includes(search.toLowerCase())) ||
             (o.orderId?.toLowerCase().includes(search.toLowerCase()));
         const matchesStatus = statusFilter === 'All' || o.orderStatus === statusFilter;
@@ -132,9 +133,9 @@ const AdminOrders = () => {
                                     </td>
                                     <td className="px-8 py-6">
                                         <div className="flex flex-col">
-                                            <span className="text-sm font-bold text-primary mb-1">{order.user?.name || 'Guest Client'}</span>
+                                            <span className="text-sm font-bold text-primary mb-1">{order.shippingAddress?.name || 'Guest Client'}</span>
                                             <div className="flex items-center gap-3 text-[10px] text-gray-400">
-                                                <span className="flex items-center gap-1"><Mail size={10} /> {order.user?.email || 'N/A'}</span>
+                                                <span className="flex items-center gap-1"><Mail size={10} /> {order.shippingAddress?.email || 'N/A'}</span>
                                             </div>
                                         </div>
                                     </td>

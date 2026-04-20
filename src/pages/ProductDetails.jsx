@@ -3,7 +3,6 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Heart, ShoppingBag, Star, ChevronLeft, ChevronRight, Loader2, ArrowLeft } from 'lucide-react';
 import { CartContext } from '../context/CartContext';
 import { WishlistContext } from '../context/WishlistContext';
-import { AuthContext } from '../context/AuthContext';
 import productService from '../services/productService';
 import toast from 'react-hot-toast';
 import { getCategoryName } from '../constants/categories';
@@ -12,7 +11,6 @@ const ProductDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { addToCart } = useContext(CartContext);
-    const { user: authUser } = useContext(AuthContext);
     const { toggleWishlist, isWishlisted } = useContext(WishlistContext);
 
     const [product, setProduct] = useState(null);
@@ -24,6 +22,7 @@ const ProductDetails = () => {
     const [sizeError, setSizeError] = useState(false);
 
     // Review state
+    const [reviewName, setReviewName] = useState('');
     const [reviewRating, setReviewRating] = useState(5);
     const [reviewComment, setReviewComment] = useState('');
     const [reviewLoading, setReviewLoading] = useState(false);
@@ -54,11 +53,13 @@ const ProductDetails = () => {
         setReviewLoading(true);
         try {
             await productService.addReview(id, {
+                name: reviewName.trim() || 'Anonymous Guest',
                 rating: reviewRating,
                 comment: reviewComment
             });
             toast.success('Thank you for your review!');
             setReviewComment('');
+            setReviewName('');
             setReviewRating(5);
             fetchProduct(); // Refresh to show new review and updated average
         } catch (err) {
@@ -270,8 +271,16 @@ const ProductDetails = () => {
                         <div className="lg:col-span-1">
                             <div className="bg-gray-50/50 p-8 rounded-sm sticky top-28">
                                 <h3 className="text-lg font-serif mb-6">Write a Review</h3>
-                                {authUser ? (
-                                    <form onSubmit={handleReviewSubmit} className="space-y-6">
+                                <form onSubmit={handleReviewSubmit} className="space-y-6">
+                                        <div>
+                                            <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-3 block">Your Name</label>
+                                            <input
+                                                value={reviewName}
+                                                onChange={(e) => setReviewName(e.target.value)}
+                                                className="w-full bg-white border border-gray-100 p-3 text-sm outline-none focus:border-accent transition-colors placeholder:text-gray-300 font-light"
+                                            />
+                                        </div>
+
                                         <div>
                                             <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-3 block">Your Rating</label>
                                             <div className="flex gap-2">
@@ -317,17 +326,6 @@ const ProductDetails = () => {
                                             )}
                                         </button>
                                     </form>
-                                ) : (
-                                    <div className="text-center py-6">
-                                        <p className="text-sm text-gray-500 mb-6 italic leading-relaxed">Only our registered guests can share their experiences.</p>
-                                        <Link
-                                            to="/login"
-                                            className="inline-block px-8 py-3 border border-primary text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-primary hover:text-white transition-all"
-                                        >
-                                            Login to Review
-                                        </Link>
-                                    </div>
-                                )}
                             </div>
                         </div>
                     </div>

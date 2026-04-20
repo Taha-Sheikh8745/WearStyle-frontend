@@ -27,6 +27,18 @@ export const STATIC_CATEGORIES = [
         ]
     },
     {
+        _id: 'fancy-wear',
+        name: 'Fancy Wear',
+        slug: 'fancy-wear',
+        children: []
+    },
+    {
+        _id: 'bridal-wear',
+        name: 'Bridal Wear',
+        slug: 'bridal-wear',
+        children: []
+    },
+    {
         _id: 'contact',
         name: 'Contact Us',
         slug: 'contact-us',

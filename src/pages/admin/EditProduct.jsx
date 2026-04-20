@@ -52,7 +52,7 @@ const EditProduct = () => {
             setExistingImages(p.images || []);
         } catch (error) {
             toast.error('Failed to load creation details');
-            navigate('/admin/products');
+            navigate('/admin-portal-xyz123/products');
         } finally {
             setLoading(false);
         }
@@ -119,7 +119,7 @@ const EditProduct = () => {
             const toastId = toast.loading('Updating the collection...');
             await productService.updateProduct(id, formData);
             toast.success('Creation updated successfully!', { id: toastId });
-            navigate('/admin/products');
+            navigate('/admin-portal-xyz123/products');
         } catch (error) {
             toast.error(error.response?.data?.message || 'Update failed');
         } finally {
@@ -297,7 +297,7 @@ const EditProduct = () => {
                         <div className="pt-8 border-t border-gray-50 flex gap-4">
                             <button 
                                 type="button"
-                                onClick={() => navigate('/admin/products')}
+                                onClick={() => navigate('/admin-portal-xyz123/products')}
                                 className="flex-1 btn-secondary"
                             >
                                 Discard Changes

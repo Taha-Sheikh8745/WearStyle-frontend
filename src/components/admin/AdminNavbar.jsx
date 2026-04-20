@@ -1,7 +1,7 @@
 import { Search, Bell, Menu, User, Settings, LogOut } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const AdminNavbar = ({ user, handleLogout }) => {
+const AdminNavbar = () => {
     return (
         <header className="h-20 bg-white border-b border-gray-100 flex items-center justify-between px-8 sticky top-0 z-30">
             <div className="flex items-center space-x-6">
@@ -28,27 +28,19 @@ const AdminNavbar = ({ user, handleLogout }) => {
 
                 <div className="h-8 w-[1px] bg-gray-100 mx-2"></div>
 
-                <div className="flex items-center gap-3 pl-2">
                     <div className="text-right hidden sm:block">
                         <motion.p 
                             initial={{ opacity: 0, y: -5 }}
                             animate={{ opacity: 1, y: 0 }}
                             className="text-sm font-bold text-primary"
                         >
-                            {user?.name || 'Admin'}
+                            Admin
                         </motion.p>
                         <p className="text-[10px] text-accent uppercase tracking-widest font-medium">Administrator</p>
                     </div>
-                    <button 
-                        onClick={handleLogout}
-                        className="p-1 rounded-full border border-gray-100 hover:border-accent transition-colors group relative"
-                        title="Logout"
-                    >
-                        <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white ring-2 ring-white transition-transform group-hover:scale-95">
-                            <User size={18} />
-                        </div>
-                    </button>
-                </div>
+                    <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white">
+                        <User size={18} />
+                    </div>
             </div>
         </header>
     );

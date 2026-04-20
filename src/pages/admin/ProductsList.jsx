@@ -73,7 +73,7 @@ const ProductsList = () => {
                     </p>
                 </div>
                 <Link 
-                    to="/admin/add-product" 
+                    to="/admin-portal-xyz123/add-product" 
                     className="btn-primary inline-flex items-center gap-3 px-8 group"
                 >
                     <Plus size={18} className="group-hover:rotate-90 transition-transform duration-300" />
@@ -158,7 +158,7 @@ const ProductsList = () => {
                                                 <Eye size={18} />
                                             </Link>
                                             <Link 
-                                                to={`/admin/edit-product/${product._id}`} 
+                                                to={`/admin-portal-xyz123/edit-product/${product._id}`} 
                                                 className="p-2.5 text-gray-400 hover:text-primary hover:bg-white rounded-lg transition-all shadow-sm shadow-transparent hover:shadow-black/5"
                                                 title="Edit Details"
                                             >

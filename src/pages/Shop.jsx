@@ -149,12 +149,6 @@ const Shop = () => {
     return (
         <div className="pt-24 min-h-screen bg-white animate-fade-in text-primary">
             <div className="container mx-auto px-4 md:px-8">
-                {/* Header Section */}
-                <div className="text-center mb-16">
-                    <p className="text-accent text-[11px] uppercase tracking-[0.4em] mb-4">Curated Curation</p>
-                    <h2 className="text-4xl md:text-5xl font-serif mb-4">World Collection</h2>
-                    <div className="w-16 h-[1px] bg-accent mx-auto" />
-                </div>
 
                 {/* Toolbar */}
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12 pb-8 border-b border-gray-100">
@@ -222,13 +216,30 @@ const Shop = () => {
                                                 Show All
                                             </button>
                                             {categories.filter(c => !c.isPage).map(cat => (
-                                                <button
-                                                    key={cat.slug}
-                                                    onClick={() => setSelectedCategory(cat.slug)}
-                                                    className={`text-[11px] text-left uppercase tracking-widest transition-all ${selectedCategory === cat.slug ? 'text-accent font-bold translate-x-2' : 'text-gray-400 hover:text-primary hover:translate-x-1'}`}
-                                                >
-                                                    {cat.name}
-                                                </button>
+                                                cat.children && cat.children.length > 0 ? (
+                                                    <div key={cat.slug} className="flex flex-col gap-2.5 mt-2">
+                                                        <span className="text-[9px] uppercase tracking-[0.3em] font-extrabold text-primary/80 mb-1">{cat.name}</span>
+                                                        <div className="flex flex-col gap-2.5 pl-2 border-l border-gray-100">
+                                                            {cat.children.map(child => (
+                                                                <button
+                                                                    key={child.slug}
+                                                                    onClick={() => setSelectedCategory(child.slug)}
+                                                                    className={`text-[10px] text-left uppercase tracking-widest transition-all ${selectedCategory === child.slug ? 'text-accent font-bold translate-x-1' : 'text-gray-400 hover:text-primary hover:translate-x-1'}`}
+                                                                >
+                                                                    {child.name}
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <button
+                                                        key={cat.slug}
+                                                        onClick={() => setSelectedCategory(cat.slug)}
+                                                        className={`text-[11px] text-left uppercase tracking-widest transition-all ${selectedCategory === cat.slug ? 'text-accent font-bold translate-x-2' : 'text-gray-400 hover:text-primary hover:translate-x-1'}`}
+                                                    >
+                                                        {cat.name}
+                                                    </button>
+                                                )
                                             ))}
                                         </div>
                                     </div>

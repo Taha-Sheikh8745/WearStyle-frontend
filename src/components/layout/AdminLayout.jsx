@@ -1,20 +1,12 @@
-import { useContext, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import AdminSidebar from '../admin/AdminSidebar';
 import AdminNavbar from '../admin/AdminNavbar';
 import { Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const AdminLayout = () => {
-    const { user, logout } = useContext(AuthContext);
-    const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-    const handleLogout = () => {
-        logout();
-        navigate('/login');
-    };
 
     return (
         <div className="min-h-screen bg-[#FDFCFB] flex font-sans text-primary selection:bg-accent selection:text-white">
@@ -39,11 +31,11 @@ const AdminLayout = () => {
             />
 
             {/* Sidebar */}
-            <AdminSidebar user={user} handleLogout={handleLogout} />
+            <AdminSidebar />
 
             {/* Main Content Area */}
             <div className="flex-1 flex flex-col min-w-0">
-                <AdminNavbar user={user} handleLogout={handleLogout} />
+                <AdminNavbar />
                 
                 <main className="flex-1 p-8 overflow-y-auto">
                     <div className="max-w-7xl mx-auto">

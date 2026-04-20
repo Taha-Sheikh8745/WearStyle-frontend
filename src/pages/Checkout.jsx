@@ -1,7 +1,6 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
-import { AuthContext } from '../context/AuthContext';
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import api from '../services/api';
 
@@ -9,12 +8,12 @@ const STEPS = ['Shipping', 'Review', 'Confirmation'];
 
 const Checkout = () => {
     const { cartItems, cartTotal, clearCart } = useContext(CartContext);
-    const { user, token } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [step, setStep] = useState(0);
     const [shipping, setShipping] = useState({
-        name: user ? `${user.firstName} ${user.lastName}` : '',
+        name: '',
+        email: '',
         street: '', city: '', state: '', zipCode: '', country: 'Pakistan', phone: '',
     });
     const [paymentMethod, setPaymentMethod] = useState('cod');
@@ -105,9 +104,13 @@ const Checkout = () => {
                                             <input required value={shipping.name} onChange={e => setShipping(s => ({ ...s, name: e.target.value }))} className="border border-gray-200 w-full p-3 text-sm outline-none focus:border-primary transition-colors" placeholder="Ayesha Khan" />
                                         </div>
                                         <div>
-                                            <label className="text-xs uppercase tracking-wide text-gray-500 mb-1 block">Phone *</label>
-                                            <input required value={shipping.phone} onChange={e => setShipping(s => ({ ...s, phone: e.target.value }))} className="border border-gray-200 w-full p-3 text-sm outline-none focus:border-primary transition-colors" placeholder="+92 300 0000000" />
+                                            <label className="text-xs uppercase tracking-wide text-gray-500 mb-1 block">Email *</label>
+                                            <input required type="email" value={shipping.email} onChange={e => setShipping(s => ({ ...s, email: e.target.value }))} className="border border-gray-200 w-full p-3 text-sm outline-none focus:border-primary transition-colors" placeholder="ayesha@example.com" />
                                         </div>
+                                    </div>
+                                    <div>
+                                        <label className="text-xs uppercase tracking-wide text-gray-500 mb-1 block">Phone *</label>
+                                        <input required value={shipping.phone} onChange={e => setShipping(s => ({ ...s, phone: e.target.value }))} className="border border-gray-200 w-full p-3 text-sm outline-none focus:border-primary transition-colors" placeholder="+92 300 0000000" />
                                     </div>
                                     <div>
                                         <label className="text-xs uppercase tracking-wide text-gray-500 mb-1 block">Street Address *</label>
@@ -205,10 +208,9 @@ const Checkout = () => {
                                 <CheckCircle size={56} className="text-green-500 mx-auto mb-6" />
                                 <h2 className="text-3xl font-serif mb-3">Order Confirmed!</h2>
                                 <p className="text-gray-500 text-sm mb-1">Thank you for your order. We'll send you shipping updates.</p>
-                                <p className="text-accent text-sm mb-4 font-medium italic">We have sent you confirmation email.</p>
+                                <p className="text-accent text-sm mb-4 font-medium italic">We have sent you a confirmation email.</p>
                                 <p className="text-xs bg-gray-50 border border-gray-200 px-4 py-2 rounded inline-block mb-8 font-mono">Order ID: {orderId}</p>
                                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                                    <button onClick={() => navigate('/dashboard')} className="btn-secondary">View My Orders</button>
                                     <button onClick={() => navigate('/shop')} className="btn-primary">Continue Shopping</button>
                                 </div>
                             </div>

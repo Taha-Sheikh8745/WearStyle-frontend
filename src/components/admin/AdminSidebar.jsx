@@ -1,16 +1,16 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, PlusCircle, List, User, LogOut, ShoppingBag, Settings, MessageSquare } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, List, ShoppingBag, Settings, MessageSquare } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const NAV_ITEMS = [
-    { title: 'Dashboard', icon: LayoutDashboard, path: '/admin' },
-    { title: 'View Products', icon: List, path: '/admin/products' },
-    { title: 'Add Product', icon: PlusCircle, path: '/admin/add-product' },
-    { title: 'Orders', icon: ShoppingBag, path: '/admin/orders' },
-    { title: 'Messages', icon: MessageSquare, path: '/admin/contacts' },
+    { title: 'Dashboard', icon: LayoutDashboard, path: '/admin-portal-xyz123' },
+    { title: 'View Products', icon: List, path: '/admin-portal-xyz123/products' },
+    { title: 'Add Product', icon: PlusCircle, path: '/admin-portal-xyz123/add-product' },
+    { title: 'Orders', icon: ShoppingBag, path: '/admin-portal-xyz123/orders' },
+    { title: 'Messages', icon: MessageSquare, path: '/admin-portal-xyz123/contacts' },
 ];
 
-const AdminSidebar = ({ user, handleLogout }) => {
+const AdminSidebar = () => {
     return (
         <aside className="w-72 bg-white border-r border-gray-100 flex flex-col h-screen sticky top-0">
             <div className="p-8 pb-10">
@@ -29,7 +29,7 @@ const AdminSidebar = ({ user, handleLogout }) => {
                     <NavLink
                         key={item.path}
                         to={item.path}
-                        end={item.path === '/admin'}
+                        end={item.path === '/admin-portal-xyz123'}
                         className={({ isActive }) => `
                             flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm transition-all duration-300 group
                             ${isActive
@@ -46,20 +46,13 @@ const AdminSidebar = ({ user, handleLogout }) => {
             <div className="p-6 border-t border-gray-50">
                 <div className="bg-gray-50 rounded-xl p-4 flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center text-accent font-serif text-lg">
-                        {user?.name?.[0] || 'A'}
+                        A
                     </div>
                     <div className="overflow-hidden">
-                        <p className="text-sm font-semibold text-primary truncate">{user?.name || 'Admin'}</p>
+                        <p className="text-sm font-semibold text-primary truncate">Admin</p>
                         <p className="text-[10px] text-gray-400 truncate uppercase tracking-wider">Super Admin</p>
                     </div>
                 </div>
-                <button
-                    onClick={handleLogout}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-xs font-bold uppercase tracking-widest text-red-500 hover:bg-red-50 transition-colors"
-                >
-                    <LogOut size={14} />
-                    Sign Out
-                </button>
             </div>
         </aside>
     );

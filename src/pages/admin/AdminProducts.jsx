@@ -1,11 +1,10 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Pencil, Trash2, Plus, Search, AlertCircle, Loader2 } from 'lucide-react';
 import api from '../../services/api';
-import { AuthContext } from '../../context/AuthContext';
+import { getFlattenedCategories } from '../../constants/categories';
 
 const AdminProducts = () => {
-    const { user } = useContext(AuthContext);
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -25,14 +24,14 @@ const AdminProducts = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const [productsRes, categoriesRes] = await Promise.all([
-                api.get('/api/products'),
-                api.get('/api/categories')
-            ]);
+            const flattened = getFlattenedCategories();
+            setCategories(flattened);
+
+            const productsRes = await api.get('/api/products');
             setProducts(productsRes.data.products || productsRes.data);
-            setCategories(categoriesRes.data.categories || categoriesRes.data);
-            if (categoriesRes.data.length > 0) {
-                setForm(f => ({ ...f, category: categoriesRes.data[0]._id }));
+            
+            if (flattened.length > 0) {
+                setForm(f => ({ ...f, category: flattened[0]._id }));
             }
         } catch (err) {
             setError('Failed to fetch data.');

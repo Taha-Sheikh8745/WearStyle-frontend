@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { getFlattenedCategories } from '../../constants/categories';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const CATEGORIES = ['Lawn', 'Pret', 'Formal', 'Unstitched', 'Sale'];
+// const CATEGORIES = ['Lawn', 'Pret', 'Formal', 'Unstitched', 'Sale']; // No longer used
 const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
 const AddProduct = () => {
@@ -91,7 +91,7 @@ const AddProduct = () => {
             const toastId = toast.loading('Crafting your masterpiece...');
             await productService.createProduct(formData);
             toast.success('Creation added to the gallery!', { id: toastId });
-            navigate('/admin/products');
+            navigate('/admin-portal-xyz123/products');
         } catch (error) {
             console.error('[AddProduct] Error:', error.response?.data || error.message);
             const msg = error.response?.data?.message || error.message || 'Failed to create product';
@@ -274,7 +274,7 @@ const AddProduct = () => {
                         <div className="pt-8 border-t border-gray-50 flex gap-4">
                             <button 
                                 type="button"
-                                onClick={() => navigate('/admin/products')}
+                                onClick={() => navigate('/admin-portal-xyz123/products')}
                                 className="flex-1 btn-secondary"
                             >
                                 Discard

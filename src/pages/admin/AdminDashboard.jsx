@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Package, ShoppingBag, Users, TrendingUp, DollarSign, ArrowUpRight, Loader2, Calendar, ChevronRight } from 'lucide-react';
+import { Package, ShoppingBag, MessageSquare, TrendingUp, DollarSign, ArrowUpRight, Loader2, Calendar, ChevronRight } from 'lucide-react';
 import api from '../../services/api';
 import { motion } from 'framer-motion';
 
@@ -68,7 +68,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="flex gap-3">
                     <button className="px-5 py-2.5 bg-white border border-gray-100 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-primary transition-colors">Export Report</button>
-                    <Link to="/admin/add-product" className="btn-primary px-6 py-2.5 flex items-center gap-2">
+                    <Link to="/admin-portal-xyz123/add-product" className="btn-primary px-6 py-2.5 flex items-center gap-2">
                         <TrendingUp size={14} />
                         <span>Scale Catalog</span>
                     </Link>
@@ -103,7 +103,7 @@ const AdminDashboard = () => {
                 <div className="lg:col-span-2 space-y-6">
                     <div className="flex justify-between items-end">
                         <h3 className="text-xl font-serif text-primary">Recent Transactions</h3>
-                        <Link to="/admin/orders" className="text-[10px] font-bold uppercase tracking-widest text-accent hover:underline flex items-center gap-1">
+                        <Link to="/admin-portal-xyz123/orders" className="text-[10px] font-bold uppercase tracking-widest text-accent hover:underline flex items-center gap-1">
                             Full Journal <ArrowUpRight size={12} />
                         </Link>
                     </div>
@@ -123,7 +123,7 @@ const AdminDashboard = () => {
                                         <tr key={order._id} className="hover:bg-gray-50/50 transition-colors group">
                                             <td className="px-6 py-5 text-xs font-mono text-gray-400">#{order._id.slice(-8).toUpperCase()}</td>
                                             <td className="px-6 py-5">
-                                                <p className="text-sm font-bold text-primary">{order.user?.name || 'Guest Client'}</p>
+                                                <p className="text-sm font-bold text-primary">{order.shippingAddress?.name || 'Guest Client'}</p>
                                                 <p className="text-[10px] text-gray-400">{new Date(order.createdAt).toLocaleDateString()}</p>
                                             </td>
                                             <td className="px-6 py-5 text-sm font-bold text-primary">Rs. {order.totalPrice.toLocaleString()}</td>
@@ -150,10 +150,10 @@ const AdminDashboard = () => {
                     <h3 className="text-xl font-serif text-primary">Navigational Links</h3>
                     <div className="grid grid-cols-1 gap-4">
                         {[
-                            { to: '/admin/products', label: 'Global Inventory', desc: 'Manage styles and stock', icon: Package },
-                            { to: '/admin/add-product', label: 'New Masterpiece', desc: 'Launch a new creation', icon: TrendingUp },
-                            { to: '/admin/orders', label: 'Sales Registry', desc: 'Track client orders', icon: ShoppingBag },
-                            { to: '/admin/users', label: 'Client Directory', desc: 'Manage user profiles', icon: Users },
+                            { to: '/admin-portal-xyz123/products', label: 'Global Inventory', desc: 'Manage styles and stock', icon: Package },
+                            { to: '/admin-portal-xyz123/add-product', label: 'New Masterpiece', desc: 'Launch a new creation', icon: TrendingUp },
+                            { to: '/admin-portal-xyz123/orders', label: 'Sales Registry', desc: 'Track client orders', icon: ShoppingBag },
+                            { to: '/admin-portal-xyz123/contacts', label: 'Messages', desc: 'Review client inquiries', icon: MessageSquare },
                         ].map((item, idx) => (
                             <Link 
                                 key={item.to} 

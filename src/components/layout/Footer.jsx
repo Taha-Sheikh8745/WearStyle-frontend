@@ -1,4 +1,4 @@
-import Navbar from './Navbar';
+import logo from '../../assets/logo_v2.png';
 
 const Footer = () => {
     return (
@@ -7,7 +7,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-4 mb-6">
 
                     <div className="col-span-1 md:col-span-1">
-                        <h3 className="font-serif text-lg tracking-wider mb-3 uppercase">WearStylewithImtisall</h3>
+                        <img src={logo} alt="WearStyle" className="h-24 object-contain mb-4" />
                         <p className="text-gray-400 text-xs leading-relaxed mb-3">
                             Defining modern elegance and unstitched luxury fashion. Crafted with meticulous attention to detail.
                         </p>
