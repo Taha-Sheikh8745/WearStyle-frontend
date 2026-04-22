@@ -27,12 +27,12 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []); // Empty dependency array as auth is removed
 
-    const navbarClasses = `fixed w-full z-50 transition-all duration-300 ${isScrolled || !isHome || isMobileMenuOpen
-        ? 'bg-white text-primary shadow-sm py-2'
-        : 'bg-transparent text-white py-3'
+    const navbarClasses = `fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${isScrolled || !isHome || isMobileMenuOpen
+        ? 'bg-white/95 backdrop-blur-md text-primary shadow-md py-2'
+        : 'bg-transparent text-primary py-4'
         }`;
 
-    const linkClasses = `nav-link ${isScrolled || !isHome || isMobileMenuOpen ? 'after:bg-primary' : 'after:bg-white'
+    const linkClasses = `nav-link ${isScrolled || !isHome || isMobileMenuOpen ? 'after:bg-primary' : 'after:bg-primary'
         }`;
 
 

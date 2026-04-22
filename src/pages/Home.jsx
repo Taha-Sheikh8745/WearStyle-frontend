@@ -21,21 +21,17 @@ const Home = () => {
     return (
         <div>
             {/* ── Hero ──────────────────────────────────────── */}
-            <div className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[#fbf9f6]">
-                {/* Main image */}
-                <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-[3s] animate-scale-in"
-                    style={{ backgroundImage: `url(${backgroundPic})` }}
+            <div className="relative w-full overflow-hidden bg-[#fbf9f6] mt-[79px] md:mt-[95px]">
+                {/* Main image - Forced to h-auto to ensure ZERO cropping of brand text/logo */}
+                <img 
+                    src={backgroundPic} 
+                    alt="WearStyle Collection" 
+                    className="w-full h-auto block animate-fade-in"
+                    loading="eager"
                 />
                 
-                {/* Subtle gradient overlay to ensure button visibility without washing out the image */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/20" />
-
-                {/* Decorative border */}
-                <div className="absolute inset-4 md:inset-8 border border-black/5 pointer-events-none z-20" />
-
-                {/* Hero Content - Positioned purposefully around the image text */}
-                <div className="relative z-10 h-full w-full flex flex-col items-center justify-end pb-24 md:pb-32 px-4 max-w-4xl mx-auto">
+                {/* Hero Content - Positioned relative to the banner height */}
+                <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-8 md:pb-20 px-4">
                     <Link
                         to="/shop"
                         className="px-10 py-4 border border-primary text-primary text-[10px] md:text-xs uppercase tracking-[0.3em] font-medium hover:bg-primary hover:text-white transition-all duration-500 animate-fade-in-up delay-500 backdrop-blur-sm bg-white/50"
