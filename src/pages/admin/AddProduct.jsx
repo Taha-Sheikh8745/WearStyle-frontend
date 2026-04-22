@@ -49,8 +49,8 @@ const AddProduct = () => {
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        if (images.length + files.length > 5) {
-            toast.error('Maximum 5 images allowed');
+        if (images.length + files.length > 8) {
+            toast.error('Maximum 8 images allowed');
             return;
         }
 
@@ -164,7 +164,7 @@ const AddProduct = () => {
                                     </motion.div>
                                 ))}
                             </AnimatePresence>
-                            {previews.length < 5 && Array(5 - previews.length).fill(0).map((_, i) => (
+                            {previews.length < 8 && Array(8 - previews.length).fill(0).map((_, i) => (
                                 <div key={i} className="aspect-[3/4] border border-dashed border-gray-100 flex items-center justify-center text-gray-200">
                                     <ImageIcon size={16} />
                                 </div>

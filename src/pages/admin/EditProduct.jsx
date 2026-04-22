@@ -74,8 +74,8 @@ const EditProduct = () => {
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        if (existingImages.length + newFiles.length + files.length > 5) {
-            toast.error('Maximum 5 images allowed');
+        if (existingImages.length + newFiles.length + files.length > 8) {
+            toast.error('Maximum 8 images allowed');
             return;
         }
 
