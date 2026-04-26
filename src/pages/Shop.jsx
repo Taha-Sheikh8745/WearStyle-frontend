@@ -112,6 +112,13 @@ const Shop = () => {
     const [sortBy, setSortBy] = useState('newest');
     const [showFilters, setShowFilters] = useState(false);
     const [keyword, setKeyword] = useState(urlKeyword);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+
+    // Reset page to 1 when filters change
+    useEffect(() => {
+        setPage(1);
+    }, [selectedCategory, keyword, priceRange, selectedSize, sortBy]);
 
     useEffect(() => {
         // Use static categories instead of fetching from DB
@@ -133,10 +140,12 @@ const Shop = () => {
                     minPrice: priceRange[0],
                     maxPrice: priceRange[1],
                     size: selectedSize,
-                    sort: sortBy
+                    sort: sortBy,
+                    page: page
                 };
                 const data = await productService.getAllProducts(params);
                 setProducts(data.products || []);
+                setTotalPages(data.pages || 1);
             } catch (err) {
                 console.error('Error fetching products:', err);
             } finally {
@@ -144,7 +153,7 @@ const Shop = () => {
             }
         };
         fetchProducts();
-    }, [selectedCategory, keyword, priceRange, selectedSize, sortBy]);
+    }, [selectedCategory, keyword, priceRange, selectedSize, sortBy, page]);
 
     return (
         <div className="pt-24 min-h-screen bg-white animate-fade-in text-primary">
@@ -317,6 +326,50 @@ const Shop = () => {
                                 {products.map((product, i) => (
                                     <ProductCard key={product._id} product={product} index={i} />
                                 ))}
+                            </div>
+                        )}
+
+                        {/* Pagination */}
+                        {!loading && products.length > 0 && totalPages > 1 && (
+                            <div className="flex justify-center items-center gap-2 mt-16 pb-8 border-t border-gray-100 pt-8">
+                                <button
+                                    onClick={() => {
+                                        setPage(p => Math.max(1, p - 1));
+                                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                                    }}
+                                    disabled={page === 1}
+                                    className="px-6 py-2.5 border border-gray-200 text-[10px] uppercase tracking-[0.2em] font-bold text-primary disabled:opacity-30 disabled:cursor-not-allowed hover:bg-primary hover:text-white transition-colors duration-300 rounded-sm"
+                                >
+                                    Previous
+                                </button>
+                                <div className="flex items-center gap-2 mx-4">
+                                    {[...Array(totalPages)].map((_, i) => (
+                                        <button
+                                            key={i + 1}
+                                            onClick={() => {
+                                                setPage(i + 1);
+                                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                                            }}
+                                            className={`w-8 h-8 flex items-center justify-center text-[10px] font-bold rounded-sm transition-all duration-300 ${
+                                                page === i + 1 
+                                                    ? 'bg-primary text-white shadow-md' 
+                                                    : 'text-gray-400 hover:bg-gray-50 hover:text-primary'
+                                            }`}
+                                        >
+                                            {i + 1}
+                                        </button>
+                                    ))}
+                                </div>
+                                <button
+                                    onClick={() => {
+                                        setPage(p => Math.min(totalPages, p + 1));
+                                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                                    }}
+                                    disabled={page === totalPages}
+                                    className="px-6 py-2.5 border border-gray-200 text-[10px] uppercase tracking-[0.2em] font-bold text-primary disabled:opacity-30 disabled:cursor-not-allowed hover:bg-primary hover:text-white transition-colors duration-300 rounded-sm"
+                                >
+                                    Next
+                                </button>
                             </div>
                         )}
                     </div>
