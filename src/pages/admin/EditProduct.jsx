@@ -19,7 +19,7 @@ const EditProduct = () => {
         title: '',
         description: '',
         price: '',
-        category: '',
+        comparePrice: '',
         category: '',
         sizes: [],
     });
@@ -45,7 +45,7 @@ const EditProduct = () => {
                 title: p.title,
                 description: p.description,
                 price: p.price,
-                category: p.category?._id || p.category,
+                comparePrice: p.comparePrice || '',
                 category: p.category?._id || p.category,
                 sizes: p.sizes || [],
             });
@@ -240,9 +240,9 @@ const EditProduct = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                             <div>
-                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">Price (PKR)</label>
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">Current Price (PKR)</label>
                                 <div className="relative">
                                     <span className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-300 font-medium text-sm">Rs.</span>
                                     <input 
@@ -252,6 +252,20 @@ const EditProduct = () => {
                                         value={form.price}
                                         onChange={handleInputChange}
                                         className="w-full pl-8 py-3 border-b border-gray-100 outline-none focus:border-accent transition-all font-bold text-primary"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">Original Price (Strike)</label>
+                                <div className="relative">
+                                    <span className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-300 font-medium text-sm">Rs.</span>
+                                    <input 
+                                        type="number" 
+                                        name="comparePrice"
+                                        value={form.comparePrice}
+                                        onChange={handleInputChange}
+                                        placeholder="Optional"
+                                        className="w-full pl-8 py-3 border-b border-gray-100 outline-none focus:border-accent transition-all font-medium text-gray-400 italic"
                                     />
                                 </div>
                             </div>

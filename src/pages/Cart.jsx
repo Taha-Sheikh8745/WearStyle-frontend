@@ -50,8 +50,11 @@ const Cart = () => {
                                 </div>
 
                                 {/* Price */}
-                                <div className="hidden md:flex md:col-span-2 justify-center">
-                                    <span className="text-sm">Rs. {item.price}</span>
+                                <div className="hidden md:flex md:col-span-2 justify-center flex-col items-center">
+                                    <span className="text-sm font-medium">Rs. {item.price}</span>
+                                    {item.comparePrice > item.price && (
+                                        <span className="text-[10px] text-gray-400 line-through">Rs. {item.comparePrice}</span>
+                                    )}
                                 </div>
 
                                 {/* Quantity */}

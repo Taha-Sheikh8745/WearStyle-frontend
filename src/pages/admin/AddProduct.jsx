@@ -18,6 +18,7 @@ const AddProduct = () => {
         title: '',
         description: '',
         price: '',
+        comparePrice: '',
         category: '',
         sizes: [],
     });
@@ -214,9 +215,9 @@ const AddProduct = () => {
                         </div>
 
                         {/* Inventory & Pricing */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                             <div>
-                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">Price (PKR)</label>
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">Current Price (PKR)</label>
                                 <div className="relative">
                                     <span className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-300 font-medium text-sm">Rs.</span>
                                     <input 
@@ -225,8 +226,22 @@ const AddProduct = () => {
                                         name="price"
                                         value={form.price}
                                         onChange={handleInputChange}
-                                        placeholder="0"
+                                        placeholder="Selling Price"
                                         className="w-full pl-8 py-3 border-b border-gray-100 outline-none focus:border-accent transition-all font-bold text-primary"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">Original Price (Strike)</label>
+                                <div className="relative">
+                                    <span className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-300 font-medium text-sm">Rs.</span>
+                                    <input 
+                                        type="number" 
+                                        name="comparePrice"
+                                        value={form.comparePrice}
+                                        onChange={handleInputChange}
+                                        placeholder="Optional"
+                                        className="w-full pl-8 py-3 border-b border-gray-100 outline-none focus:border-accent transition-all font-medium text-gray-400 italic"
                                     />
                                 </div>
                             </div>
