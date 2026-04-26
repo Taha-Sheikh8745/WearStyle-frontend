@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, X, Upload, CheckCircle2, AlertCircle, Loader2, ChevronLeft, Image as ImageIcon } from 'lucide-react';
+import { Plus, X, Upload, CheckCircle2, AlertCircle, Loader2, ChevronLeft, Image as ImageIcon, Sparkles } from 'lucide-react';
 import productService from '../../services/productService';
 import toast from 'react-hot-toast';
 import { getFlattenedCategories } from '../../constants/categories';
@@ -23,6 +23,9 @@ const AddProduct = () => {
         sizes: [],
     });
 
+    const [isSale, setIsSale] = useState(false);
+    const [discountPercent, setDiscountPercent] = useState('');
+
     const [images, setImages] = useState([]);
     const [previews, setPreviews] = useState([]);
 
@@ -37,6 +40,19 @@ const AddProduct = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setForm(prev => ({ ...prev, [name]: value }));
+    };
+
+    const applyDiscount = (percent) => {
+        const p = parseFloat(form.comparePrice || form.price);
+        if (p && percent) {
+            const salePrice = Math.round(p * (1 - percent / 100));
+            setForm(prev => ({ 
+                ...prev, 
+                price: salePrice.toString(),
+                comparePrice: prev.comparePrice || prev.price // Ensure regular price is set
+            }));
+            setDiscountPercent(percent);
+        }
     };
 
     const toggleSize = (size) => {
@@ -214,50 +230,109 @@ const AddProduct = () => {
                             </div>
                         </div>
 
-                        {/* Inventory & Pricing */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                            <div>
-                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">Current Price (PKR)</label>
-                                <div className="relative">
-                                    <span className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-300 font-medium text-sm">Rs.</span>
-                                    <input 
-                                        required
-                                        type="number" 
-                                        name="price"
-                                        value={form.price}
-                                        onChange={handleInputChange}
-                                        placeholder="Selling Price"
-                                        className="w-full pl-8 py-3 border-b border-gray-100 outline-none focus:border-accent transition-all font-bold text-primary"
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">Original Price (Strike)</label>
-                                <div className="relative">
-                                    <span className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-300 font-medium text-sm">Rs.</span>
-                                    <input 
-                                        type="number" 
-                                        name="comparePrice"
-                                        value={form.comparePrice}
-                                        onChange={handleInputChange}
-                                        placeholder="Optional"
-                                        className="w-full pl-8 py-3 border-b border-gray-100 outline-none focus:border-accent transition-all font-medium text-gray-400 italic"
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">Category</label>
-                                <select 
-                                    required
-                                    name="category"
-                                    value={form.category}
-                                    onChange={handleInputChange}
-                                    className="w-full py-3 border-b border-gray-100 outline-none focus:border-accent transition-all font-medium text-primary appearance-none bg-transparent cursor-pointer"
+                        {/* Pricing Section */}
+                        <div className="bg-gray-50/50 p-6 border border-gray-100 space-y-6">
+                            <div className="flex items-center justify-between">
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Pricing & Offers</label>
+                                <button 
+                                    type="button"
+                                    onClick={() => {
+                                        const newIsSale = !isSale;
+                                        setIsSale(newIsSale);
+                                        if (!newIsSale) {
+                                            // Reset comparePrice when turning off sale
+                                            setForm(prev => ({ ...prev, comparePrice: '' }));
+                                        } else if (!form.comparePrice) {
+                                            // When turning on, move price to comparePrice
+                                            setForm(prev => ({ ...prev, comparePrice: prev.price }));
+                                        }
+                                    }}
+                                    className={`flex items-center gap-2 px-3 py-1.5 rounded-full transition-all text-[10px] font-bold uppercase tracking-widest ${isSale ? 'bg-accent text-white shadow-md shadow-accent/20' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'}`}
                                 >
-                                    {categories.map(cat => (
-                                        <option key={cat._id} value={cat._id}>{cat.name}</option>
-                                    ))}
-                                </select>
+                                    <Sparkles size={12} />
+                                    {isSale ? 'Sale Active' : 'Enable Sale'}
+                                </button>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {!isSale ? (
+                                    <div className="md:col-span-1">
+                                        <label className="text-[9px] uppercase tracking-widest text-gray-400 font-bold mb-2 block">Product Price (PKR)</label>
+                                        <div className="relative">
+                                            <span className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-300 font-medium text-sm">Rs.</span>
+                                            <input 
+                                                required
+                                                type="number" 
+                                                name="price"
+                                                value={form.price}
+                                                onChange={handleInputChange}
+                                                placeholder="0"
+                                                className="w-full pl-8 py-3 border-b border-gray-200 outline-none focus:border-accent transition-all font-bold text-primary bg-transparent"
+                                            />
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div>
+                                            <label className="text-[9px] uppercase tracking-widest text-gray-400 font-bold mb-2 block">Regular Price (Strike)</label>
+                                            <div className="relative">
+                                                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-300 font-medium text-sm">Rs.</span>
+                                                <input 
+                                                    required
+                                                    type="number" 
+                                                    name="comparePrice"
+                                                    value={form.comparePrice}
+                                                    onChange={handleInputChange}
+                                                    placeholder="Original Price"
+                                                    className="w-full pl-8 py-3 border-b border-gray-200 outline-none focus:border-accent transition-all font-medium text-gray-400 italic bg-transparent"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="text-[9px] uppercase tracking-widest text-gray-400 font-bold mb-2 block">Sale Price (Active)</label>
+                                            <div className="relative">
+                                                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-300 font-medium text-sm">Rs.</span>
+                                                <input 
+                                                    required
+                                                    type="number" 
+                                                    name="price"
+                                                    value={form.price}
+                                                    onChange={handleInputChange}
+                                                    placeholder="Discounted Price"
+                                                    className="w-full pl-8 py-3 border-b border-gray-200 outline-none focus:border-accent transition-all font-bold text-accent bg-transparent"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col justify-end pb-1">
+                                            <div className="flex gap-2">
+                                                {[10, 20, 30, 50].map(pct => (
+                                                    <button 
+                                                        key={pct}
+                                                        type="button"
+                                                        onClick={() => applyDiscount(pct)}
+                                                        className="px-2 py-1 bg-white border border-gray-100 text-[8px] font-bold text-gray-500 hover:border-accent hover:text-accent transition-all rounded"
+                                                    >
+                                                        -{pct}%
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                                <div className={isSale ? 'lg:col-span-3' : 'md:col-span-2'}>
+                                    <label className="text-[9px] uppercase tracking-widest text-gray-400 font-bold mb-2 block">Collection Category</label>
+                                    <select 
+                                        required
+                                        name="category"
+                                        value={form.category}
+                                        onChange={handleInputChange}
+                                        className="w-full py-3 border-b border-gray-200 outline-none focus:border-accent transition-all font-medium text-primary appearance-none bg-transparent cursor-pointer"
+                                    >
+                                        {categories.map(cat => (
+                                            <option key={cat._id} value={cat._id}>{cat.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
