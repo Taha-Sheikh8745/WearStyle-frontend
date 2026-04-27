@@ -45,8 +45,8 @@ const ProductCard = ({ product, index }) => {
                 {/* Badges */}
                 <div className="absolute top-3 left-3 flex flex-col gap-1.5">
                     {discount && (
-                        <span className="bg-accent text-white text-[10px] uppercase tracking-[0.2em] px-2.5 py-1 font-bold shadow-sm">
-                            -{discount}%
+                        <span className="bg-red-600 text-white text-[10px] uppercase tracking-[0.2em] px-2.5 py-1 font-bold shadow-sm">
+                            SAVE {discount}%
                         </span>
                     )}
                     {product.isFeatured && (

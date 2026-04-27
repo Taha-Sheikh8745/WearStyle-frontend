@@ -1,5 +1,11 @@
 export const STATIC_CATEGORIES = [
     {
+        _id: 'sale',
+        name: 'Sale',
+        slug: 'sale',
+        children: []
+    },
+    {
         _id: 'new-arrival',
         name: 'New Arrival',
         slug: 'new-arrival',

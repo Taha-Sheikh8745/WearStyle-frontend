@@ -7,6 +7,7 @@ import unstitchedImg from '../assets/unstitched.png';
 import pretImg from '../assets/pret.png';
 
 const categoryImages = {
+    'sale': 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=800&auto=format&fit=crop',
     'new-arrival': 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=800&auto=format&fit=crop',
     'unstitched': unstitchedImg,
     'pret-stitched': pretImg,
