@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
-import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { CheckCircle, AlertCircle, Loader2, Smartphone, Wallet } from 'lucide-react';
 import api from '../services/api';
 
 const STEPS = ['Shipping', 'Review', 'Confirmation'];
@@ -17,6 +17,7 @@ const Checkout = () => {
         street: '', city: '', state: '', zipCode: '', country: 'Pakistan', phone: '',
     });
     const [paymentMethod, setPaymentMethod] = useState('cod');
+    const [onlineMethod, setOnlineMethod] = useState('easypaisa');
     const [orderPlaced, setOrderPlaced] = useState(false);
     const [orderId, setOrderId] = useState('');
     const [loading, setLoading] = useState(false);
@@ -45,7 +46,7 @@ const Checkout = () => {
                     quantity: item.quantity
                 })),
                 shippingAddress: shipping,
-                paymentMethod
+                paymentMethod: paymentMethod === 'online' ? onlineMethod : paymentMethod
             };
 
             const { data } = await api.post('/api/orders', orderData);
@@ -134,13 +135,36 @@ const Checkout = () => {
                                     <div className="mt-4">
                                         <h3 className="text-xs uppercase tracking-widest font-medium mb-4">Payment Method</h3>
                                         <div className="flex flex-col gap-3">
-                                            {[{ value: 'cod', label: 'Cash on Delivery' }, { value: 'stripe', label: 'Credit / Debit Card (Stripe)' }, { value: 'paypal', label: 'PayPal' }].map(opt => (
+                                            {[{ value: 'cod', label: 'Cash on Delivery' }, { value: 'online', label: 'Online Payment' }].map(opt => (
                                                 <label key={opt.value} className={`flex items-center gap-3 border p-4 cursor-pointer transition-colors ${paymentMethod === opt.value ? 'border-primary bg-gray-50' : 'border-gray-200'}`}>
                                                     <input type="radio" name="payment" value={opt.value} checked={paymentMethod === opt.value} onChange={e => setPaymentMethod(e.target.value)} className="accent-primary" />
                                                     <span className="text-sm">{opt.label}</span>
-                                                    {opt.value !== 'cod' && <span className="ml-auto text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded">Coming Soon</span>}
                                                 </label>
                                             ))}
+                                            
+                                            {paymentMethod === 'online' && (
+                                                <div className="ml-8 mt-1 flex flex-col gap-3 p-4 border border-gray-100 bg-gray-50 rounded">
+                                                    <p className="text-xs text-gray-500 mb-1">Select your provider:</p>
+                                                    <div className="grid grid-cols-2 gap-3">
+                                                        <label className={`flex flex-col items-center justify-center gap-2 border p-4 cursor-pointer transition-all ${onlineMethod === 'easypaisa' ? 'border-green-500 bg-green-50 text-green-700' : 'border-gray-200 bg-white hover:border-green-300'}`}>
+                                                            <input type="radio" name="onlinePayment" value="easypaisa" checked={onlineMethod === 'easypaisa'} onChange={e => setOnlineMethod(e.target.value)} className="sr-only" />
+                                                            <svg viewBox="0 0 140 36" className={`h-8 mb-1 transition-all ${onlineMethod !== 'easypaisa' && 'grayscale opacity-50'}`}>
+                                                                <rect width="140" height="36" rx="6" fill="#42B029" />
+                                                                <text x="70" y="24" textAnchor="middle" fill="white" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="700" fontSize="18" letterSpacing="-0.5">easypaisa</text>
+                                                            </svg>
+                                                            <span className="text-sm font-medium">Easypaisa</span>
+                                                        </label>
+                                                        <label className={`flex flex-col items-center justify-center gap-2 border p-4 cursor-pointer transition-all ${onlineMethod === 'jazzcash' ? 'border-red-500 bg-red-50 text-red-700' : 'border-gray-200 bg-white hover:border-red-300'}`}>
+                                                            <input type="radio" name="onlinePayment" value="jazzcash" checked={onlineMethod === 'jazzcash'} onChange={e => setOnlineMethod(e.target.value)} className="sr-only" />
+                                                            <svg viewBox="0 0 140 36" className={`h-8 mb-1 transition-all ${onlineMethod !== 'jazzcash' && 'grayscale opacity-50'}`}>
+                                                                <text x="15" y="26" fill="#111" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="800" fontSize="24" fontStyle="italic" letterSpacing="-1">Jazz</text>
+                                                                <text x="68" y="26" fill="#ED1C24" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="800" fontSize="24" fontStyle="italic" letterSpacing="-1">Cash</text>
+                                                            </svg>
+                                                            <span className="text-sm font-medium">Jazz Cash</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                     <button type="submit" className="btn-primary mt-4">Continue to Review</button>
@@ -156,7 +180,7 @@ const Checkout = () => {
                                     <p className="font-medium mb-1">{shipping.name}</p>
                                     <p>{shipping.street}, {shipping.city}, {shipping.state} {shipping.zipCode}</p>
                                     <p>{shipping.country} | {shipping.phone}</p>
-                                    <p className="mt-2 text-gray-400">Payment: <span className="capitalize text-gray-600">{paymentMethod === 'cod' ? 'Cash on Delivery' : paymentMethod}</span></p>
+                                    <p className="mt-2 text-gray-400">Payment: <span className="capitalize text-gray-600">{paymentMethod === 'cod' ? 'Cash on Delivery' : paymentMethod === 'online' ? (onlineMethod === 'easypaisa' ? 'Online Easypaisa' : 'Jazz Cash') : paymentMethod}</span></p>
                                 </div>
                                 {cartItems.map(item => (
                                     <div key={`${item._id}-${item.selectedSize}`} className="flex gap-4 py-4 border-b border-gray-100 last:border-0">
