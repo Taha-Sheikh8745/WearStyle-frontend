@@ -18,6 +18,7 @@ const Checkout = () => {
     });
     const [paymentMethod, setPaymentMethod] = useState('cod');
     const [onlineMethod, setOnlineMethod] = useState('easypaisa');
+    const [paymentScreenshot, setPaymentScreenshot] = useState(null);
     const [orderPlaced, setOrderPlaced] = useState(false);
     const [orderId, setOrderId] = useState('');
     const [loading, setLoading] = useState(false);
@@ -36,20 +37,29 @@ const Checkout = () => {
         setError('');
 
         try {
-            const orderData = {
-                items: cartItems.map(item => ({
-                    product: item._id,
-                    title: item.title,
-                    image: item.images?.[0]?.url,
-                    price: item.price,
-                    selectedSize: item.selectedSize,
-                    quantity: item.quantity
-                })),
-                shippingAddress: shipping,
-                paymentMethod: paymentMethod === 'online' ? onlineMethod : paymentMethod
-            };
+            const orderItems = cartItems.map(item => ({
+                product: item._id,
+                title: item.title,
+                image: item.images?.[0]?.url,
+                price: item.price,
+                selectedSize: item.selectedSize,
+                quantity: item.quantity
+            }));
 
-            const { data } = await api.post('/api/orders', orderData);
+            const finalPaymentMethod = paymentMethod === 'online' ? onlineMethod : paymentMethod;
+
+            const formData = new FormData();
+            formData.append('items', JSON.stringify(orderItems));
+            formData.append('shippingAddress', JSON.stringify(shipping));
+            formData.append('paymentMethod', finalPaymentMethod);
+
+            if (finalPaymentMethod === 'easypaisa' && paymentScreenshot) {
+                formData.append('paymentScreenshot', paymentScreenshot);
+            }
+
+            const { data } = await api.post('/api/orders', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
 
             if (data.success) {
                 setOrderId(data.order.orderId || data.order._id);
@@ -145,7 +155,7 @@ const Checkout = () => {
                                             {paymentMethod === 'online' && (
                                                 <div className="ml-8 mt-1 flex flex-col gap-3 p-4 border border-gray-100 bg-gray-50 rounded">
                                                     <p className="text-xs text-gray-500 mb-1">Select your provider:</p>
-                                                    <div className="grid grid-cols-2 gap-3">
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                                         <label className={`flex flex-col items-center justify-center gap-2 border p-4 cursor-pointer transition-all ${onlineMethod === 'easypaisa' ? 'border-green-500 bg-green-50 text-green-700' : 'border-gray-200 bg-white hover:border-green-300'}`}>
                                                             <input type="radio" name="onlinePayment" value="easypaisa" checked={onlineMethod === 'easypaisa'} onChange={e => setOnlineMethod(e.target.value)} className="sr-only" />
                                                             <svg viewBox="0 0 140 36" className={`h-8 mb-1 transition-all ${onlineMethod !== 'easypaisa' && 'grayscale opacity-50'}`}>
@@ -154,15 +164,30 @@ const Checkout = () => {
                                                             </svg>
                                                             <span className="text-sm font-medium">Easypaisa</span>
                                                         </label>
-                                                        <label className={`flex flex-col items-center justify-center gap-2 border p-4 cursor-pointer transition-all ${onlineMethod === 'jazzcash' ? 'border-red-500 bg-red-50 text-red-700' : 'border-gray-200 bg-white hover:border-red-300'}`}>
-                                                            <input type="radio" name="onlinePayment" value="jazzcash" checked={onlineMethod === 'jazzcash'} onChange={e => setOnlineMethod(e.target.value)} className="sr-only" />
-                                                            <svg viewBox="0 0 140 36" className={`h-8 mb-1 transition-all ${onlineMethod !== 'jazzcash' && 'grayscale opacity-50'}`}>
-                                                                <text x="15" y="26" fill="#111" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="800" fontSize="24" fontStyle="italic" letterSpacing="-1">Jazz</text>
-                                                                <text x="68" y="26" fill="#ED1C24" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="800" fontSize="24" fontStyle="italic" letterSpacing="-1">Cash</text>
-                                                            </svg>
-                                                            <span className="text-sm font-medium">Jazz Cash</span>
-                                                        </label>
                                                     </div>
+                                                    
+                                                    {onlineMethod === 'easypaisa' && (
+                                                        <div className="mt-4 p-4 border border-green-200 bg-white rounded flex flex-col gap-3">
+                                                            <div className="text-sm text-gray-700">
+                                                                <p className="font-semibold mb-1">Transfer instructions:</p>
+                                                                <p>Please send the total amount to the following Easypaisa account:</p>
+                                                                <div className="bg-gray-50 p-3 mt-2 rounded border border-gray-200 text-xs font-mono">
+                                                                    <p><span className="text-gray-500 mr-2">Number:</span> <span className="font-bold text-base text-gray-800">03218003319</span></p>
+                                                                    <p className="mt-1"><span className="text-gray-500 mr-2">Account Title:</span> <span className="font-bold text-gray-800 uppercase">IMTISALL NASIR</span></p>
+                                                                </div>
+                                                            </div>
+                                                            <div className="mt-2">
+                                                                <label className="text-xs uppercase tracking-wide text-gray-500 mb-2 block">Upload Payment Screenshot *</label>
+                                                                <input 
+                                                                    type="file" 
+                                                                    accept="image/*"
+                                                                    required={onlineMethod === 'easypaisa'}
+                                                                    onChange={e => setPaymentScreenshot(e.target.files[0])}
+                                                                    className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 transition-colors border border-gray-200 rounded p-1 bg-white"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             )}
                                         </div>
@@ -180,7 +205,7 @@ const Checkout = () => {
                                     <p className="font-medium mb-1">{shipping.name}</p>
                                     <p>{shipping.street}, {shipping.city}, {shipping.state} {shipping.zipCode}</p>
                                     <p>{shipping.country} | {shipping.phone}</p>
-                                    <p className="mt-2 text-gray-400">Payment: <span className="capitalize text-gray-600">{paymentMethod === 'cod' ? 'Cash on Delivery' : paymentMethod === 'online' ? (onlineMethod === 'easypaisa' ? 'Online Easypaisa' : 'Jazz Cash') : paymentMethod}</span></p>
+                                    <p className="mt-2 text-gray-400">Payment: <span className="capitalize text-gray-600">{paymentMethod === 'cod' ? 'Cash on Delivery' : paymentMethod === 'online' ? 'Online Easypaisa' : paymentMethod}</span></p>
                                 </div>
                                 {cartItems.map(item => (
                                     <div key={`${item._id}-${item.selectedSize}`} className="flex gap-4 py-4 border-b border-gray-100 last:border-0">

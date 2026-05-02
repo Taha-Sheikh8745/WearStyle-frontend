@@ -112,6 +112,7 @@ const AdminOrders = () => {
                                 <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Client Identity</th>
                                 <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold text-center">Items</th>
                                 <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Valuation</th>
+                                <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Payment Proof</th>
                                 <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Lifecycle State</th>
                             </tr>
                         </thead>
@@ -149,6 +150,20 @@ const AdminOrders = () => {
                                             <span className="text-sm font-bold text-primary">Rs. {Math.round(order.totalPrice)?.toLocaleString()}</span>
                                             <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest">Paid</span>
                                         </div>
+                                    </td>
+                                    <td className="px-8 py-6">
+                                        {order.paymentScreenshot ? (
+                                            <a 
+                                                href={order.paymentScreenshot} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-accent hover:text-primary transition-colors bg-accent/10 px-3 py-1.5 rounded"
+                                            >
+                                                <Eye size={12} /> View Proof
+                                            </a>
+                                        ) : (
+                                            <span className="text-[10px] font-medium text-gray-300 uppercase tracking-widest">-</span>
+                                        )}
                                     </td>
                                     <td className="px-8 py-6">
                                         <div className="flex items-center gap-4">

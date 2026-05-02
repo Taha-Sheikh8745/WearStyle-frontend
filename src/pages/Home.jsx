@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { STATIC_CATEGORIES } from '../constants/categories';
-import backgroundPic from '../assets/Wearstylewith.png';
+import backgroundPic from '../assets/shop-bg.jpeg';
 import bridalImg from '../assets/bridal.png';
 import fancyImg from '../assets/fancy.png';
 import unstitchedImg from '../assets/unstitched.png';

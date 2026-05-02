@@ -18,6 +18,7 @@ import ProductsList from './pages/admin/ProductsList';
 import AddProduct from './pages/admin/AddProduct';
 import EditProduct from './pages/admin/EditProduct';
 import AdminOrders from './pages/admin/AdminOrders';
+import AdminPayments from './pages/admin/AdminPayments';
 import AdminContacts from './pages/admin/AdminContacts';
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
           <Route path="checkout" element={<Checkout />} />
           <Route path="contact-us" element={<Contact />} />
         </Route>
-
+ 
         {/* Hidden Admin Route — not linked anywhere in the UI */}
         <Route path="/admin-portal-xyz123" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
@@ -41,6 +42,7 @@ function App() {
           <Route path="add-product" element={<AddProduct />} />
           <Route path="edit-product/:id" element={<EditProduct />} />
           <Route path="orders" element={<AdminOrders />} />
+          <Route path="payments" element={<AdminPayments />} />
           <Route path="contacts" element={<AdminContacts />} />
         </Route>
       </Routes>

@@ -6,6 +6,7 @@ import { useState, useEffect, useContext } from 'react';
 import productService from '../services/productService';
 import { STATIC_CATEGORIES, getCategoryName } from '../constants/categories';
 import { motion, AnimatePresence } from 'framer-motion';
+import wearStyleBg from '../assets/shop-bg.jpeg';
 
 const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
@@ -156,8 +157,11 @@ const Shop = () => {
     }, [selectedCategory, keyword, priceRange, selectedSize, sortBy, page]);
 
     return (
-        <div className="pt-24 min-h-screen bg-white animate-fade-in text-primary">
-            <div className="container mx-auto px-4 md:px-8">
+        <div 
+            className="pt-24 min-h-screen animate-fade-in text-primary bg-fixed bg-cover bg-center"
+            style={{ backgroundImage: `url(${wearStyleBg})` }}
+        >
+            <div className="container mx-auto px-4 md:px-8 bg-white/80 backdrop-blur-md rounded-lg py-12 shadow-2xl">
 
                 {/* Toolbar */}
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12 pb-8 border-b border-gray-100">

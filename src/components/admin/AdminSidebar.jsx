@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, PlusCircle, List, ShoppingBag, Settings, MessageSquare } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, List, ShoppingBag, Settings, MessageSquare, CreditCard } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const NAV_ITEMS = [
@@ -7,6 +7,7 @@ const NAV_ITEMS = [
     { title: 'View Products', icon: List, path: '/admin-portal-xyz123/products' },
     { title: 'Add Product', icon: PlusCircle, path: '/admin-portal-xyz123/add-product' },
     { title: 'Orders', icon: ShoppingBag, path: '/admin-portal-xyz123/orders' },
+    { title: 'Payments', icon: CreditCard, path: '/admin-portal-xyz123/payments' },
     { title: 'Messages', icon: MessageSquare, path: '/admin-portal-xyz123/contacts' },
 ];
 
