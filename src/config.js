@@ -1,1 +1,0 @@
-const API_URL = "https://wear-style-backend.vercel.app/"
