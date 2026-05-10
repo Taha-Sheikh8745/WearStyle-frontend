@@ -169,11 +169,10 @@ const ProductDetails = () => {
                             <span className="text-sm text-gray-500">{product.rating || 0} ({product.numReviews || 0} reviews)</span>
                         </div>
 
-                        {/* Price */}
                         <div className="flex items-center gap-4 mb-8">
-                            <span className="text-2xl font-medium">Rs. {Math.round(product.price)}</span>
+                            <span className="text-2xl font-bold">Rs. {Math.round(product.price)}</span>
                             {product.comparePrice > 0 && (
-                                <span className="text-lg text-gray-400 line-through">Rs. {Math.round(product.comparePrice)}</span>
+                                <span className="text-lg text-gray-400 line-through font-bold">Rs. {Math.round(product.comparePrice)}</span>
                             )}
                             {product.comparePrice > 0 && (
                                 <span className="text-sm bg-green-50 text-green-700 px-2 py-0.5 rounded">

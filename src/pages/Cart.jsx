@@ -51,9 +51,9 @@ const Cart = () => {
 
                                 {/* Price */}
                                 <div className="hidden md:flex md:col-span-2 justify-center flex-col items-center">
-                                    <span className="text-sm font-medium">Rs. {item.price}</span>
+                                    <span className="text-sm font-bold">Rs. {item.price}</span>
                                     {item.comparePrice > item.price && (
-                                        <span className="text-[10px] text-gray-400 line-through">Rs. {item.comparePrice}</span>
+                                        <span className="text-[10px] text-gray-400 line-through font-bold">Rs. {item.comparePrice}</span>
                                     )}
                                 </div>
 
@@ -67,7 +67,7 @@ const Cart = () => {
                                 </div>
 
                                 {/* Total */}
-                                    <span className="text-sm font-medium">Rs. {item.price * item.quantity}</span>
+                                    <span className="text-sm font-bold">Rs. {item.price * item.quantity}</span>
                             </div>
                         ))}
                     </div>

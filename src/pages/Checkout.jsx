@@ -173,7 +173,7 @@ const Checkout = () => {
                                                                 <p>Please send the total amount to the following Easypaisa account:</p>
                                                                 <div className="bg-gray-50 p-3 mt-2 rounded border border-gray-200 text-xs font-mono">
                                                                     <p><span className="text-gray-500 mr-2">Number:</span> <span className="font-bold text-base text-gray-800">03218003319</span></p>
-                                                                    <p className="mt-1"><span className="text-gray-500 mr-2">Account Title:</span> <span className="font-bold text-gray-800 uppercase">IMTISALL NASIR</span></p>
+                                                                    <p className="mt-1"><span className="text-gray-500 mr-2">Account Title:</span> <span className="font-bold text-gray-800 uppercase">AMATI SAL NASIR</span></p>
                                                                 </div>
                                                             </div>
                                                             <div className="mt-2">
@@ -216,7 +216,7 @@ const Checkout = () => {
                                             <p className="text-sm font-medium">{item.title}</p>
                                             <p className="text-xs text-gray-400 mt-1">Size: {item.selectedSize} · Qty: {item.quantity}</p>
                                         </div>
-                                        <p className="text-sm font-medium">Rs. {item.price * item.quantity}</p>
+                                        <p className="text-sm font-bold">Rs. {item.price * item.quantity}</p>
                                     </div>
                                 ))}
                                 {error && (
@@ -275,7 +275,7 @@ const Checkout = () => {
                                     {cartItems.map(item => (
                                         <div key={`${item._id}-${item.selectedSize}`} className="flex justify-between text-gray-600">
                                             <span className="truncate flex-1 mr-2">{item.title} ×{item.quantity}</span>
-                                            <span className="font-medium">Rs. {item.price * item.quantity}</span>
+                                            <span className="font-bold">Rs. {item.price * item.quantity}</span>
                                         </div>
                                     ))}
                                 </div>

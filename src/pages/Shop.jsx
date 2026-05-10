@@ -91,7 +91,7 @@ const ProductCard = ({ product, index }) => {
                 <div className="flex items-center justify-center gap-2.5">
                     <span className="text-sm font-bold text-primary italic font-serif">Rs. {Math.round(product.price)?.toLocaleString()}</span>
                     {product.comparePrice > 0 && (
-                        <span className="text-xs text-gray-300 line-through font-mono">Rs. {Math.round(product.comparePrice)?.toLocaleString()}</span>
+                        <span className="text-xs text-gray-400 line-through font-mono font-bold">Rs. {Math.round(product.comparePrice)?.toLocaleString()}</span>
                     )}
                 </div>
             </div>

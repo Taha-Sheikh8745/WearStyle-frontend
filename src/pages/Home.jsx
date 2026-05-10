@@ -23,7 +23,6 @@ const Home = () => {
         <div>
             {/* ── Hero ──────────────────────────────────────── */}
             <div className="relative w-full overflow-hidden bg-[#fbf9f6] mt-[79px] md:mt-[95px]">
-                {/* Main image - Forced to h-auto to ensure ZERO cropping of brand text/logo */}
                 <img 
                     src={backgroundPic} 
                     alt="WearStyle Collection" 
@@ -31,7 +30,6 @@ const Home = () => {
                     loading="eager"
                 />
                 
-                {/* Hero Content - Positioned relative to the banner height */}
                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-8 md:pb-20 px-4">
                     <Link
                         to="/shop"
@@ -42,6 +40,7 @@ const Home = () => {
                     </Link>
                 </div>
             </div>
+
 
             {/* ── Category Showcase ──────────────────────────────── */}
             <div className="w-full bg-white py-24 px-4 md:px-8">
