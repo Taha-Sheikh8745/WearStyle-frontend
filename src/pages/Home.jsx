@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { STATIC_CATEGORIES } from '../constants/categories';
+import HeroCarousel from '../components/home/HeroCarousel';
 import backgroundPic from '../assets/shop-bg.jpeg';
 import bridalImg from '../assets/bridal.png';
 import fancyImg from '../assets/fancy.png';
@@ -20,26 +21,9 @@ const Home = () => {
     const displayCategories = STATIC_CATEGORIES.filter(c => !c.isPage);
 
     return (
-        <div>
-            {/* ── Hero ──────────────────────────────────────── */}
-            <div className="relative w-full overflow-hidden bg-[#fbf9f6] mt-[79px] md:mt-[95px]">
-                <img 
-                    src={backgroundPic} 
-                    alt="WearStyle Collection" 
-                    className="w-full h-auto block animate-fade-in"
-                    loading="eager"
-                />
-                
-                <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-8 md:pb-20 px-4">
-                    <Link
-                        to="/shop"
-                        className="px-10 py-4 border border-primary text-primary text-[10px] md:text-xs uppercase tracking-[0.3em] font-medium hover:bg-primary hover:text-white transition-all duration-500 animate-fade-in-up delay-500 backdrop-blur-sm bg-white/50"
-                        style={{ animationFillMode: 'both' }}
-                    >
-                        Explore Collection
-                    </Link>
-                </div>
-            </div>
+        <div className="mt-[79px] md:mt-[95px]">
+            {/* ── Hero Carousel ────────────────────────────────── */}
+            <HeroCarousel />
 
 
             {/* ── Category Showcase ──────────────────────────────── */}
