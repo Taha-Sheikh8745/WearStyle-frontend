@@ -13,32 +13,32 @@ import banner5 from '../../assets/shop-bg.jpeg';
 const slides = [
     {
         id: 1,
+        image: banner5,
+        link: "/shop",
+        showText: false
+    },
+    {
+        id: 2,
         image: banner1,
         link: "/shop?category=bridal-wear",
         showText: false
     },
     {
-        id: 2,
+        id: 3,
         image: banner2,
         link: "/shop?category=unstitched",
         showText: false
     },
     {
-        id: 3,
+        id: 4,
         image: banner3,
         link: "/shop?category=pret",
         showText: false
     },
     {
-        id: 4,
+        id: 5,
         image: banner4,
         link: "/shop?category=fancy-wear",
-        showText: false
-    },
-    {
-        id: 5,
-        image: banner5,
-        link: "/shop",
         showText: false
     }
 ];
@@ -50,7 +50,7 @@ const HeroCarousel = () => {
     useEffect(() => {
         const timer = setInterval(() => {
             nextSlide();
-        }, 12000); // 12 seconds
+        }, 5000); // 5 seconds
         return () => clearInterval(timer);
     }, [current]);
 

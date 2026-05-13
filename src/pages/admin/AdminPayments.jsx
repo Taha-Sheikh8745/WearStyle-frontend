@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, Loader2, Calendar, Mail, ExternalLink, Eye, LayoutGrid, List as ListIcon, ShoppingBag } from 'lucide-react';
+import { Search, Loader2, Calendar, Mail, ExternalLink, Eye, LayoutGrid, List as ListIcon, ShoppingBag, Trash2 } from 'lucide-react';
 import api from '../../services/api';
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
@@ -26,6 +26,18 @@ const AdminPayments = () => {
             toast.error('Failed to retrieve payment history');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleDeleteScreenshot = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this payment screenshot?')) return;
+
+        try {
+            await api.delete(`/api/orders/${id}/screenshot`);
+            toast.success('Screenshot deleted successfully');
+            fetchOrders();
+        } catch (err) {
+            toast.error(err.response?.data?.message || 'Failed to delete screenshot');
         }
     };
 
@@ -107,7 +119,7 @@ const AdminPayments = () => {
                                     alt={`Proof for ${order.orderId}`}
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 />
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                                     <a 
                                         href={order.paymentScreenshot} 
                                         target="_blank" 
@@ -116,6 +128,12 @@ const AdminPayments = () => {
                                     >
                                         <Eye size={20} />
                                     </a>
+                                    <button 
+                                        onClick={() => handleDeleteScreenshot(order._id)}
+                                        className="bg-white text-red-500 p-3 rounded-full shadow-2xl hover:scale-110 transition-transform"
+                                    >
+                                        <Trash2 size={20} />
+                                    </button>
                                 </div>
                             </div>
                             <div className="p-5 flex-1 flex flex-col">
@@ -187,14 +205,23 @@ const AdminPayments = () => {
                                             <span className="text-sm font-bold text-accent">Rs. {Math.round(order.totalPrice)?.toLocaleString()}</span>
                                         </td>
                                         <td className="px-8 py-4 text-right">
-                                            <a 
-                                                href={order.paymentScreenshot} 
-                                                target="_blank" 
-                                                rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-2 px-4 py-2 bg-gray-50 text-gray-400 hover:bg-accent hover:text-white rounded-full text-[10px] font-bold uppercase tracking-widest transition-all"
-                                            >
-                                                <Eye size={12} /> View Proof
-                                            </a>
+                                            <div className="flex items-center justify-end gap-2">
+                                                <a 
+                                                    href={order.paymentScreenshot} 
+                                                    target="_blank" 
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-50 text-gray-400 hover:bg-accent hover:text-white rounded-full text-[10px] font-bold uppercase tracking-widest transition-all"
+                                                >
+                                                    <Eye size={12} /> View Proof
+                                                </a>
+                                                <button 
+                                                    onClick={() => handleDeleteScreenshot(order._id)}
+                                                    className="inline-flex items-center justify-center w-8 h-8 bg-red-50 text-red-400 hover:bg-red-500 hover:text-white rounded-full transition-all"
+                                                    title="Delete Screenshot"
+                                                >
+                                                    <Trash2 size={14} />
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
