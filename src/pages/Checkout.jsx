@@ -173,7 +173,7 @@ const Checkout = () => {
                                                                 <p>Please send the total amount to the following Easypaisa account:</p>
                                                                 <div className="bg-gray-50 p-3 mt-2 rounded border border-gray-200 text-xs font-mono">
                                                                     <p><span className="text-gray-500 mr-2">Number:</span> <span className="font-bold text-base text-gray-800">03218003319</span></p>
-                                                                    <p className="mt-1"><span className="text-gray-500 mr-2">Account Title:</span> <span className="font-bold text-gray-800 uppercase">AMATI SAL NASIR</span></p>
+                                                                    <p className="mt-1"><span className="text-gray-500 mr-2">Account Title:</span> <span className="font-bold text-gray-800 uppercase">AMTISAL NASIR</span></p>
                                                                 </div>
                                                             </div>
                                                             <div className="mt-2">
