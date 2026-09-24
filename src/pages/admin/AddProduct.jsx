@@ -136,10 +136,10 @@ const AddProduct = () => {
                 <p className="text-gray-400 text-sm mt-2 font-medium uppercase tracking-wider">Add a new exquisite piece to your collection</p>
             </div>
 
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
                 {/* Left Column: Media */}
-                <div className="md:col-span-1 space-y-6">
-                    <div className="bg-white p-6 border border-gray-100 shadow-sm">
+                <div className="lg:col-span-1 space-y-6">
+                    <div className="bg-white p-4 sm:p-6 border border-gray-100 shadow-sm rounded-xs">
                         <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-4 block">Product Imagery</label>
                         
                         <div className="relative group">
@@ -174,7 +174,7 @@ const AddProduct = () => {
                                         <button 
                                             type="button"
                                             onClick={() => removeImage(index)}
-                                            className="absolute top-1 right-1 p-1 bg-white/90 text-red-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                            className="absolute top-1 right-1 p-1 bg-white/95 text-red-500 rounded-full opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity shadow-xs"
                                         >
                                             <X size={12} />
                                         </button>
@@ -189,7 +189,7 @@ const AddProduct = () => {
                         </div>
                     </div>
 
-                    <div className="bg-accent/5 p-6 border border-accent/10">
+                    <div className="bg-accent/5 p-4 sm:p-6 border border-accent/10 rounded-xs">
                         <h4 className="text-[10px] uppercase tracking-widest text-accent font-bold mb-3 flex items-center gap-2">
                             <AlertCircle size={14} /> Style Tip
                         </h4>
@@ -200,8 +200,8 @@ const AddProduct = () => {
                 </div>
 
                 {/* Right Column: Details */}
-                <div className="md:col-span-2 space-y-6">
-                    <div className="bg-white p-8 border border-gray-100 shadow-sm space-y-8">
+                <div className="lg:col-span-2 space-y-6">
+                    <div className="bg-white p-5 sm:p-8 border border-gray-100 shadow-sm space-y-6 sm:space-y-8 rounded-xs">
                         {/* Title & Description */}
                         <div className="space-y-6">
                             <div>

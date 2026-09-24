@@ -176,15 +176,15 @@ const EditProduct = () => {
                 </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
                 {/* Left Column: Media */}
-                <div className="md:col-span-1 space-y-6">
-                    <div className="bg-white p-6 border border-gray-100 shadow-sm">
+                <div className="lg:col-span-1 space-y-6">
+                    <div className="bg-white p-4 sm:p-6 border border-gray-100 shadow-sm rounded-xs">
                         <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-4 block">Current & New Imagery</label>
                         
                         <div className="grid grid-cols-2 gap-3 mb-6">
                             {existingImages.map((img, index) => (
-                                <div key={index} className="relative aspect-[3/4] bg-gray-50 border border-gray-100 overflow-hidden group">
+                                <div key={index} className="relative aspect-[3/4] bg-gray-50 border border-gray-100 overflow-hidden group rounded-xs">
                                     <img src={img.url} alt="existing" className="w-full h-full object-cover" />
                                     <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-accent text-white text-[8px] font-bold rounded uppercase">Active</div>
                                 </div>
@@ -196,13 +196,13 @@ const EditProduct = () => {
                                         initial={{ opacity: 0, scale: 0.8 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         exit={{ opacity: 0, scale: 0.8 }}
-                                        className="relative aspect-[3/4] bg-gray-50 border border-accent/20 overflow-hidden group"
+                                        className="relative aspect-[3/4] bg-gray-50 border border-accent/20 overflow-hidden group rounded-xs"
                                     >
                                         <img src={url} alt="new" className="w-full h-full object-cover opacity-70" />
                                         <button 
                                             type="button"
                                             onClick={() => removeNewImage(index)}
-                                            className="absolute top-1 right-1 p-1 bg-white/90 text-red-500 rounded-full opacity-100"
+                                            className="absolute top-1 right-1 p-1 bg-white/95 text-red-500 rounded-full opacity-100 shadow-xs"
                                         >
                                             <X size={12} />
                                         </button>
@@ -230,8 +230,8 @@ const EditProduct = () => {
                 </div>
 
                 {/* Right Column: Details */}
-                <div className="md:col-span-2 space-y-6">
-                    <div className="bg-white p-8 border border-gray-100 shadow-sm space-y-8">
+                <div className="lg:col-span-2 space-y-6">
+                    <div className="bg-white p-5 sm:p-8 border border-gray-100 shadow-sm space-y-6 sm:space-y-8 rounded-xs">
                         <div className="space-y-6">
                             <div>
                                 <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 block">Creation Title</label>

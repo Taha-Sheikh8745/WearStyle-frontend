@@ -15,31 +15,36 @@ const slides = [
         id: 1,
         image: banner5,
         link: "/shop",
-        showText: false
+        title: "Spring Summer Pret",
+        subtitle: "Handcrafted Luxury"
     },
     {
         id: 2,
         image: banner1,
         link: "/shop?category=bridal-wear",
-        showText: false
+        title: "Bridal Couture",
+        subtitle: "Timeless Grandeur"
     },
     {
         id: 3,
         image: banner2,
         link: "/shop?category=unstitched",
-        showText: false
+        title: "Unstitched Luxury",
+        subtitle: "Pure Fabric & Craft"
     },
     {
         id: 4,
         image: banner3,
-        link: "/shop?category=pret",
-        showText: false
+        link: "/shop?category=pret-stitched",
+        title: "Ready to Wear",
+        subtitle: "Contemporary Grace"
     },
     {
         id: 5,
         image: banner4,
         link: "/shop?category=fancy-wear",
-        showText: false
+        title: "Festive Fancy Wear",
+        subtitle: "Celebratory Splendor"
     }
 ];
 
@@ -50,7 +55,7 @@ const HeroCarousel = () => {
     useEffect(() => {
         const timer = setInterval(() => {
             nextSlide();
-        }, 5000); // 5 seconds
+        }, 5000);
         return () => clearInterval(timer);
     }, [current]);
 
@@ -64,9 +69,18 @@ const HeroCarousel = () => {
         setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
     };
 
+    const handleDragEnd = (e, { offset, velocity }) => {
+        const swipeThreshold = 50;
+        if (offset.x > swipeThreshold || velocity.x > 500) {
+            prevSlide();
+        } else if (offset.x < -swipeThreshold || velocity.x < -500) {
+            nextSlide();
+        }
+    };
+
     const variants = {
-        enter: (direction) => ({
-            x: direction > 0 ? '100%' : '-100%',
+        enter: (dir) => ({
+            x: dir > 0 ? '100%' : '-100%',
             opacity: 0
         }),
         center: {
@@ -74,17 +88,17 @@ const HeroCarousel = () => {
             x: 0,
             opacity: 1,
             transition: {
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.8 }
+                x: { type: "spring", stiffness: 280, damping: 28 },
+                opacity: { duration: 0.6 }
             }
         },
-        exit: (direction) => ({
+        exit: (dir) => ({
             zIndex: 0,
-            x: direction < 0 ? '100%' : '-100%',
+            x: dir < 0 ? '100%' : '-100%',
             opacity: 0,
             transition: {
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.8 }
+                x: { type: "spring", stiffness: 280, damping: 28 },
+                opacity: { duration: 0.6 }
             }
         })
     };
@@ -94,8 +108,8 @@ const HeroCarousel = () => {
     const activeSlide = slides[current] || slides[0];
 
     return (
-        <div className="relative w-full h-[300px] md:h-[600px] overflow-hidden bg-[#fbf9f6] py-0">
-            <div className="max-w-[1400px] mx-auto h-full relative">
+        <div className="relative w-full h-[260px] xs:h-[320px] sm:h-[440px] md:h-[520px] lg:h-[600px] xl:h-[660px] overflow-hidden bg-[#fbf9f6] select-none touch-pan-y">
+            <div className="max-w-[1600px] mx-auto h-full relative">
                 <AnimatePresence initial={false} custom={direction}>
                     <motion.div
                         key={current}
@@ -104,12 +118,16 @@ const HeroCarousel = () => {
                         initial="enter"
                         animate="center"
                         exit="exit"
-                        className="absolute inset-0 overflow-hidden shadow-sm"
+                        drag="x"
+                        dragConstraints={{ left: 0, right: 0 }}
+                        dragElastic={0.2}
+                        onDragEnd={handleDragEnd}
+                        className="absolute inset-0 overflow-hidden cursor-grab active:cursor-grabbing"
                     >
                         <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
-                            {/* Blurred Background Layer */}
+                            {/* Blurred Ambient Background Layer */}
                             <div 
-                                className="absolute inset-0 z-0 opacity-40 blur-3xl scale-110"
+                                className="absolute inset-0 z-0 opacity-40 blur-2xl md:blur-3xl scale-110 pointer-events-none"
                                 style={{ 
                                     backgroundImage: `url(${activeSlide.image})`,
                                     backgroundSize: 'cover',
@@ -120,16 +138,30 @@ const HeroCarousel = () => {
                             {/* Main Sharp Image */}
                             <img 
                                 src={activeSlide.image} 
-                                alt="Banner"
-                                className="relative z-10 w-full h-full object-contain"
+                                alt={activeSlide.title || "Banner"}
+                                className="relative z-10 w-full h-full object-contain pointer-events-none"
+                                draggable="false"
                             />
                         </div>
 
-                        {/* Centered Explore Button */}
-                        <div className="absolute inset-0 flex flex-col justify-end items-center pb-8 md:pb-16 z-20">
+                        {/* Overlay Controls & Call to Action */}
+                        <div className="absolute inset-0 flex flex-col justify-end items-center pb-8 xs:pb-10 sm:pb-12 md:pb-16 z-20 pointer-events-none">
+                            {/* Slide Title/Subtitle */}
+                            <div className="text-center mb-4 sm:mb-5 px-4">
+                                {activeSlide.subtitle && (
+                                    <p className="text-white/80 text-[9px] xs:text-[10px] sm:text-xs uppercase tracking-[0.3em] mb-1 font-medium drop-shadow-sm">
+                                        {activeSlide.subtitle}
+                                    </p>
+                                )}
+                                {activeSlide.title && (
+                                    <h2 className="text-white text-lg xs:text-xl sm:text-2xl md:text-3xl font-serif drop-shadow-md leading-tight">
+                                        {activeSlide.title}
+                                    </h2>
+                                )}
+                            </div>
                             <Link
-                                to="/shop"
-                                className="px-8 md:px-12 py-3 md:py-4 bg-white/80 backdrop-blur-md text-primary text-[10px] md:text-xs uppercase tracking-[0.3em] font-bold hover:bg-primary hover:text-white transition-all duration-500 shadow-xl border border-primary/20"
+                                to={activeSlide.link || "/shop"}
+                                className="pointer-events-auto px-5 xs:px-7 sm:px-10 md:px-12 py-2.5 sm:py-3 md:py-4 bg-white/90 backdrop-blur-md text-primary text-[9px] xs:text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold hover:bg-primary hover:text-white transition-all duration-300 shadow-xl border border-primary/20 hover:scale-105 active:scale-95"
                             >
                                 Explore Collection
                             </Link>
@@ -137,19 +169,40 @@ const HeroCarousel = () => {
                     </motion.div>
                 </AnimatePresence>
 
-                {/* Navigation Arrows */}
+                {/* Navigation Arrows (Visible and responsive across phones, tablets & desktops) */}
                 <button
                     onClick={prevSlide}
-                    className="absolute left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/50 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-all duration-500 backdrop-blur-md hidden md:flex"
+                    aria-label="Previous slide"
+                    className="absolute left-2 sm:left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 border border-white/60 rounded-full flex items-center justify-center text-primary sm:text-white bg-white/60 sm:bg-black/20 hover:bg-white hover:text-primary transition-all backdrop-blur-md shadow-md hover:scale-110 active:scale-95"
                 >
-                    <ChevronLeft size={24} />
+                    <ChevronLeft size={18} className="md:w-6 md:h-6" />
                 </button>
                 <button
                     onClick={nextSlide}
-                    className="absolute right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/50 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-all duration-500 backdrop-blur-md hidden md:flex"
+                    aria-label="Next slide"
+                    className="absolute right-2 sm:right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 border border-white/60 rounded-full flex items-center justify-center text-primary sm:text-white bg-white/60 sm:bg-black/20 hover:bg-white hover:text-primary transition-all backdrop-blur-md shadow-md hover:scale-110 active:scale-95"
                 >
-                    <ChevronRight size={24} />
+                    <ChevronRight size={18} className="md:w-6 md:h-6" />
                 </button>
+
+                {/* Slide Indicators (Dots for touch & visual feedback) */}
+                <div className="absolute bottom-3 sm:bottom-4 inset-x-0 z-20 flex justify-center items-center gap-1.5 sm:gap-2 pointer-events-auto">
+                    {slides.map((_, idx) => (
+                        <button
+                            key={idx}
+                            onClick={() => {
+                                setDirection(idx > current ? 1 : -1);
+                                setCurrent(idx);
+                            }}
+                            aria-label={`Go to slide ${idx + 1}`}
+                            className={`h-1.5 transition-all duration-300 rounded-full ${
+                                current === idx 
+                                    ? 'w-6 sm:w-8 bg-accent shadow-xs' 
+                                    : 'w-1.5 sm:w-2 bg-black/30 hover:bg-black/50'
+                            }`}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );

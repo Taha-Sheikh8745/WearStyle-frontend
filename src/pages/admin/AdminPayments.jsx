@@ -8,7 +8,7 @@ const AdminPayments = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
-    const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'table'
+    const [viewMode, setViewMode] = useState('grid');
 
     useEffect(() => {
         fetchOrders();
@@ -18,7 +18,6 @@ const AdminPayments = () => {
         try {
             setLoading(true);
             const { data } = await api.get('/api/orders');
-            // Filter orders that have screenshots
             const allOrders = data.orders || data;
             const ordersWithScreenshots = allOrders.filter(o => o.paymentScreenshot);
             setOrders(ordersWithScreenshots);
@@ -51,114 +50,115 @@ const AdminPayments = () => {
 
     if (loading) {
         return (
-            <div className="flex flex-col items-center justify-center p-20 space-y-4">
-                <Loader2 className="animate-spin text-accent" size={40} />
-                <p className="text-sm font-medium text-gray-400 uppercase tracking-widest">Accessing Payment Archives...</p>
+            <div className="flex flex-col items-center justify-center p-12 sm:p-20 space-y-4">
+                <Loader2 className="animate-spin text-accent" size={36} />
+                <p className="text-xs font-medium text-gray-400 uppercase tracking-widest">Accessing Payment Archives...</p>
             </div>
         );
     }
 
     return (
-        <div className="space-y-8 animate-fade-in">
-            <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="space-y-6 sm:space-y-8 animate-fade-in">
+            <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h2 className="text-3xl font-serif text-primary">Payment Screenshots</h2>
-                    <p className="text-gray-400 text-sm mt-2 font-medium uppercase tracking-widest">
+                    <h2 className="text-2xl sm:text-3xl font-serif text-primary">Payment Screenshots</h2>
+                    <p className="text-gray-400 text-xs sm:text-sm mt-1 font-medium uppercase tracking-wider">
                         Verify manual transfers via Easypaisa
                     </p>
                 </div>
-                <div className="flex bg-white border border-gray-100 p-1 rounded-lg">
+                <div className="flex bg-white border border-gray-100 p-1 rounded-xs self-end sm:self-auto">
                     <button 
                         onClick={() => setViewMode('grid')}
-                        className={`p-2 rounded-md transition-all ${viewMode === 'grid' ? 'bg-primary text-white shadow-md' : 'text-gray-400 hover:text-primary'}`}
+                        aria-label="Grid view"
+                        className={`p-2 rounded-xs transition-all ${viewMode === 'grid' ? 'bg-primary text-white shadow-xs' : 'text-gray-400 hover:text-primary'}`}
                     >
-                        <LayoutGrid size={18} />
+                        <LayoutGrid size={16} />
                     </button>
                     <button 
                         onClick={() => setViewMode('table')}
-                        className={`p-2 rounded-md transition-all ${viewMode === 'table' ? 'bg-primary text-white shadow-md' : 'text-gray-400 hover:text-primary'}`}
+                        aria-label="Table view"
+                        className={`p-2 rounded-xs transition-all ${viewMode === 'table' ? 'bg-primary text-white shadow-xs' : 'text-gray-400 hover:text-primary'}`}
                     >
-                        <ListIcon size={18} />
+                        <ListIcon size={16} />
                     </button>
                 </div>
             </header>
 
             {/* Search Bar */}
-            <div className="bg-white p-4 border border-gray-100 shadow-sm">
+            <div className="bg-white p-3 sm:p-4 border border-gray-100 rounded-xs shadow-xs">
                 <div className="relative w-full">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300" size={18} />
+                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                     <input 
                         type="text" 
-                        placeholder="Search by Customer Name or Order ID..."
+                        placeholder="Search by customer name or order ID..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        className="w-full pl-12 pr-4 py-3 bg-[#FDFCFB] border border-transparent focus:border-accent/30 focus:bg-white outline-none transition-all text-sm font-medium"
+                        className="w-full pl-10 pr-4 py-2.5 bg-[#FDFCFB] border border-gray-100 focus:border-accent/40 focus:bg-white outline-none transition-all text-xs sm:text-sm rounded-xs"
                     />
                 </div>
             </div>
 
             {filteredOrders.length === 0 ? (
-                <div className="bg-white border border-gray-100 p-20 text-center rounded-xl shadow-sm">
-                    <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-gray-100">
-                        <ShoppingBag size={32} className="text-gray-200" />
+                <div className="bg-white border border-gray-100 p-12 sm:p-20 text-center rounded-xs shadow-xs">
+                    <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-100">
+                        <ShoppingBag size={28} className="text-gray-300" />
                     </div>
-                    <h3 className="text-xl font-serif text-primary italic">No payment proofs found.</h3>
-                    <p className="text-sm text-gray-400 mt-2">Screenshots will appear here once customers place Easypaisa orders.</p>
+                    <h3 className="text-lg sm:text-xl font-serif text-primary italic">No payment proofs found.</h3>
+                    <p className="text-xs text-gray-400 mt-1.5">Screenshots will appear here once customers place Easypaisa orders.</p>
                 </div>
             ) : viewMode === 'grid' ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                     {filteredOrders.map((order) => (
                         <motion.div 
                             layout
                             key={order._id}
-                            className="bg-white border border-gray-100 overflow-hidden group hover:shadow-xl transition-all duration-500 rounded-xl flex flex-col"
+                            className="bg-white border border-gray-100 overflow-hidden group hover:shadow-lg transition-all rounded-xs flex flex-col"
                         >
-                            <div className="relative aspect-[3/4] overflow-hidden bg-gray-50 border-b border-gray-50">
+                            <div className="relative aspect-[3/4] overflow-hidden bg-gray-50 border-b border-gray-100">
                                 <img 
                                     src={order.paymentScreenshot} 
                                     alt={`Proof for ${order.orderId}`}
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                 />
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                                <div className="absolute inset-0 bg-black/40 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                                     <a 
                                         href={order.paymentScreenshot} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
-                                        className="bg-white text-primary p-3 rounded-full shadow-2xl hover:scale-110 transition-transform"
+                                        className="bg-white text-primary p-2.5 rounded-full shadow-lg hover:scale-110 active:scale-95 transition-transform"
+                                        title="View Proof"
                                     >
-                                        <Eye size={20} />
+                                        <Eye size={18} />
                                     </a>
                                     <button 
                                         onClick={() => handleDeleteScreenshot(order._id)}
-                                        className="bg-white text-red-500 p-3 rounded-full shadow-2xl hover:scale-110 transition-transform"
+                                        className="bg-white text-red-500 p-2.5 rounded-full shadow-lg hover:scale-110 active:scale-95 transition-transform"
+                                        title="Delete Proof"
                                     >
-                                        <Trash2 size={20} />
+                                        <Trash2 size={18} />
                                     </button>
                                 </div>
                             </div>
-                            <div className="p-5 flex-1 flex flex-col">
-                                <div className="flex justify-between items-start mb-4">
-                                    <div>
-                                        <span className="text-[10px] font-mono text-gray-400 uppercase tracking-tighter block mb-1">#{order.orderId || order._id.slice(-8).toUpperCase()}</span>
-                                        <h3 className="text-sm font-bold text-primary truncate max-w-[150px]">{order.shippingAddress?.name}</h3>
+                            <div className="p-4 flex-1 flex flex-col justify-between">
+                                <div className="flex justify-between items-start mb-3 gap-2">
+                                    <div className="min-w-0">
+                                        <span className="text-[10px] font-mono text-gray-400 block mb-0.5">#{order.orderId || order._id.slice(-6).toUpperCase()}</span>
+                                        <h3 className="text-xs sm:text-sm font-bold text-primary truncate">{order.shippingAddress?.name}</h3>
                                     </div>
-                                    <div className="text-right">
+                                    <div className="text-right flex-shrink-0">
                                         <p className="text-xs font-bold text-accent">Rs. {Math.round(order.totalPrice)?.toLocaleString()}</p>
-                                        <p className="text-[9px] text-gray-400 uppercase tracking-widest mt-1">{new Date(order.createdAt).toLocaleDateString()}</p>
+                                        <p className="text-[9px] text-gray-400 mt-0.5">{new Date(order.createdAt).toLocaleDateString()}</p>
                                     </div>
                                 </div>
-                                <div className="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
-                                    <div className="flex items-center gap-2 text-gray-400">
-                                        <Mail size={12} />
-                                        <span className="text-[10px] truncate max-w-[100px]">{order.shippingAddress?.email}</span>
-                                    </div>
+                                <div className="pt-3 border-t border-gray-50 flex items-center justify-between text-xs">
+                                    <span className="text-[11px] text-gray-400 truncate max-w-[130px]">{order.shippingAddress?.phone || order.shippingAddress?.email}</span>
                                     <a 
                                         href={order.paymentScreenshot} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
-                                        className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent hover:text-primary transition-colors flex items-center gap-1"
+                                        className="text-[10px] font-bold uppercase tracking-wider text-accent hover:text-primary transition-colors flex items-center gap-1"
                                     >
-                                        Full Image <ExternalLink size={10} />
+                                        Inspect <ExternalLink size={10} />
                                     </a>
                                 </div>
                             </div>
@@ -166,60 +166,52 @@ const AdminPayments = () => {
                     ))}
                 </div>
             ) : (
-                <div className="bg-white border border-gray-100 overflow-hidden shadow-sm rounded-xl">
+                <div className="bg-white border border-gray-100 overflow-hidden shadow-xs rounded-xs">
                     <div className="overflow-x-auto">
-                        <table className="w-full text-left">
+                        <table className="w-full text-left min-w-[620px]">
                             <thead>
                                 <tr className="bg-[#FDFCFB] border-b border-gray-100">
-                                    <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Screenshot</th>
-                                    <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Order Details</th>
-                                    <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Customer</th>
-                                    <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Amount</th>
-                                    <th className="px-8 py-5 text-[10px] uppercase tracking-widest text-gray-400 font-bold text-right">Action</th>
+                                    <th className="px-4 sm:px-6 py-4 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Screenshot</th>
+                                    <th className="px-4 sm:px-6 py-4 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Order Details</th>
+                                    <th className="px-4 sm:px-6 py-4 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Customer</th>
+                                    <th className="px-4 sm:px-6 py-4 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Amount</th>
+                                    <th className="px-4 sm:px-6 py-4 text-[10px] uppercase tracking-widest text-gray-400 font-bold text-right">Action</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-50">
+                            <tbody className="divide-y divide-gray-50 text-xs sm:text-sm">
                                 {filteredOrders.map((order) => (
-                                    <tr key={order._id} className="hover:bg-gray-50/50 transition-colors group">
-                                        <td className="px-8 py-4">
-                                            <div className="w-16 h-16 rounded overflow-hidden bg-gray-50 border border-gray-100">
-                                                <img src={order.paymentScreenshot} className="w-full h-full object-cover" />
+                                    <tr key={order._id} className="hover:bg-gray-50/50 transition-colors">
+                                        <td className="px-4 sm:px-6 py-3">
+                                            <div className="w-12 h-16 rounded overflow-hidden bg-gray-50 border border-gray-200">
+                                                <img src={order.paymentScreenshot} alt="Proof" className="w-full h-full object-cover" />
                                             </div>
                                         </td>
-                                        <td className="px-8 py-4">
-                                            <div className="flex flex-col">
-                                                <span className="text-xs font-mono text-gray-400 mb-1">#{order.orderId || order._id.slice(-8).toUpperCase()}</span>
-                                                <div className="flex items-center gap-1.5 text-gray-300">
-                                                    <Calendar size={10} />
-                                                    <span className="text-[10px] font-medium uppercase tracking-tight">{new Date(order.createdAt).toLocaleDateString()}</span>
-                                                </div>
-                                            </div>
+                                        <td className="px-4 sm:px-6 py-3">
+                                            <p className="font-mono text-gray-400 text-xs">#{order.orderId || order._id.slice(-6).toUpperCase()}</p>
+                                            <p className="text-[10px] text-gray-400">{new Date(order.createdAt).toLocaleDateString()}</p>
                                         </td>
-                                        <td className="px-8 py-4">
-                                            <div className="flex flex-col">
-                                                <span className="text-sm font-bold text-primary mb-1">{order.shippingAddress?.name}</span>
-                                                <span className="text-[10px] text-gray-400">{order.shippingAddress?.email}</span>
-                                            </div>
+                                        <td className="px-4 sm:px-6 py-3">
+                                            <p className="font-bold text-primary">{order.shippingAddress?.name}</p>
+                                            <p className="text-[11px] text-gray-400">{order.shippingAddress?.phone}</p>
                                         </td>
-                                        <td className="px-8 py-4">
-                                            <span className="text-sm font-bold text-accent">Rs. {Math.round(order.totalPrice)?.toLocaleString()}</span>
+                                        <td className="px-4 sm:px-6 py-3 font-bold text-primary font-serif">
+                                            Rs. {Math.round(order.totalPrice)?.toLocaleString()}
                                         </td>
-                                        <td className="px-8 py-4 text-right">
+                                        <td className="px-4 sm:px-6 py-3 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 <a 
                                                     href={order.paymentScreenshot} 
                                                     target="_blank" 
                                                     rel="noopener noreferrer"
-                                                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-50 text-gray-400 hover:bg-accent hover:text-white rounded-full text-[10px] font-bold uppercase tracking-widest transition-all"
+                                                    className="p-2 text-gray-400 hover:text-accent"
                                                 >
-                                                    <Eye size={12} /> View Proof
+                                                    <Eye size={16} />
                                                 </a>
                                                 <button 
                                                     onClick={() => handleDeleteScreenshot(order._id)}
-                                                    className="inline-flex items-center justify-center w-8 h-8 bg-red-50 text-red-400 hover:bg-red-500 hover:text-white rounded-full transition-all"
-                                                    title="Delete Screenshot"
+                                                    className="p-2 text-gray-400 hover:text-red-500"
                                                 >
-                                                    <Trash2 size={14} />
+                                                    <Trash2 size={16} />
                                                 </button>
                                             </div>
                                         </td>

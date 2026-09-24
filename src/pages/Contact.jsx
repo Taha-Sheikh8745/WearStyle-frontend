@@ -10,7 +10,7 @@ const Contact = () => {
         message: ''
     });
     const [loading, setLoading] = useState(false);
-    const [status, setStatus] = useState(null); // { type: 'success' | 'error', message: string }
+    const [status, setStatus] = useState(null);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,120 +36,124 @@ const Contact = () => {
     };
 
     return (
-        <div className="pt-24 min-h-screen bg-white">
+        <div className="pt-16 sm:pt-20 md:pt-24 min-h-screen bg-white">
             {/* Header Section */}
-            <div className="bg-secondary py-16 mb-16">
+            <div className="bg-secondary py-10 sm:py-16 mb-8 sm:mb-16 border-b border-gray-100">
                 <div className="container mx-auto px-4 text-center">
-                    <p className="text-accent text-[11px] uppercase tracking-[0.4em] mb-4">Connect With Us</p>
-                    <h1 className="text-4xl md:text-5xl font-serif mb-6 uppercase">Contact Our Team</h1>
-                    <div className="w-16 h-[1px] bg-accent mx-auto" />
+                    <p className="text-accent text-[10px] sm:text-[11px] uppercase tracking-[0.4em] mb-3 font-semibold">Connect With Us</p>
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif mb-4 uppercase text-primary">Contact Our Concierge</h1>
+                    <div className="w-12 sm:w-16 h-[1px] bg-accent mx-auto" />
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 md:px-8 pb-20">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 pb-12 sm:pb-20 md:pb-24">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-start">
                     
                     {/* Left: Contact Info */}
-                    <div className="space-y-12">
+                    <div className="space-y-8 sm:space-y-12">
                         <div>
-                            <h2 className="text-2xl font-serif mb-8 flex items-center gap-3">
-                                <span className="w-8 h-[1px] bg-accent" />
+                            <h2 className="text-xl sm:text-2xl font-serif mb-4 sm:mb-6 flex items-center gap-3 text-primary">
+                                <span className="w-6 sm:w-8 h-[1px] bg-accent" />
                                 Get In Touch
                             </h2>
-                            <p className="text-gray-500 text-sm leading-relaxed max-w-md">
+                            <p className="text-gray-500 text-xs sm:text-sm leading-relaxed max-w-md">
                                 Have a question about our collections or need assistance with your order? 
-                                Our customer service team is here to help you.
+                                Our customer service team is here to assist you with bespoke Pakistani fashion inquiries.
                             </p>
                         </div>
 
-                        <div className="space-y-8">
-                            <div className="flex items-start gap-5">
-                                <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-accent flex-shrink-0">
-                                    <Mail size={20} />
+                        <div className="space-y-6 sm:space-y-8">
+                            <div className="flex items-start gap-4 sm:gap-5">
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-secondary rounded-full flex items-center justify-center text-accent flex-shrink-0 shadow-xs">
+                                    <Mail size={18} className="sm:w-5 sm:h-5" />
                                 </div>
                                 <div>
-                                    <h4 className="text-[11px] uppercase tracking-widest font-semibold mb-2">Email Us</h4>
-                                    <p className="text-gray-500 text-sm">Imtinas23@gmail.com</p>
+                                    <h4 className="text-[10px] sm:text-[11px] uppercase tracking-widest font-semibold mb-1">Email Us</h4>
+                                    <a href="mailto:Imtinas23@gmail.com" className="text-gray-500 hover:text-accent text-xs sm:text-sm transition-colors">
+                                        Imtinas23@gmail.com
+                                    </a>
                                 </div>
                             </div>
 
-                            <div className="flex items-start gap-5">
-                                <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-accent flex-shrink-0">
-                                    <Phone size={20} />
+                            <div className="flex items-start gap-4 sm:gap-5">
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-secondary rounded-full flex items-center justify-center text-accent flex-shrink-0 shadow-xs">
+                                    <Phone size={18} className="sm:w-5 sm:h-5" />
                                 </div>
                                 <div>
-                                    <h4 className="text-[11px] uppercase tracking-widest font-semibold mb-2">Call Us</h4>
-                                    <p className="text-gray-500 text-sm">03218003319</p>
+                                    <h4 className="text-[10px] sm:text-[11px] uppercase tracking-widest font-semibold mb-1">Call & WhatsApp</h4>
+                                    <a href="tel:03218003319" className="text-gray-500 hover:text-accent text-xs sm:text-sm transition-colors">
+                                        0321 8003319
+                                    </a>
                                 </div>
                             </div>
                         </div>
 
                         {/* Decorative Quote */}
-                        <div className="pt-8 border-t border-gray-100">
-                            <p className="italic text-gray-400 text-sm font-serif">
+                        <div className="pt-6 sm:pt-8 border-t border-gray-100">
+                            <p className="italic text-gray-400 text-xs sm:text-sm font-serif">
                                 "Elegance is not standing out, but being remembered."
                             </p>
                         </div>
                     </div>
 
                     {/* Right: Contact Form */}
-                    <div className="bg-white p-8 md:p-12 shadow-2xl shadow-gray-100 border border-gray-50 relative animate-fade-in-up">
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="bg-white p-5 sm:p-8 md:p-12 shadow-xl shadow-gray-100 border border-gray-100 relative rounded-xs">
+                        <form onSubmit={handleSubmit} className="space-y-5">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                                 <div>
-                                    <label className="text-[10px] uppercase tracking-widest text-gray-400 mb-2 block">Full Name</label>
+                                    <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-1.5 block">Full Name *</label>
                                     <input
                                         type="text"
                                         name="name"
                                         required
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className="w-full bg-secondary border-none px-4 py-3 text-sm focus:ring-1 focus:ring-accent outline-none transition-all"
-                                        placeholder="Enter your name"
+                                        className="w-full bg-[#fbf9f6] border border-gray-200/70 px-3.5 py-3 text-sm focus:border-accent focus:bg-white outline-none transition-all rounded-xs"
+                                        placeholder="Your name"
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] uppercase tracking-widest text-gray-400 mb-2 block">Email Address</label>
+                                    <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-1.5 block">Email Address *</label>
                                     <input
                                         type="email"
                                         name="email"
                                         required
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className="w-full bg-secondary border-none px-4 py-3 text-sm focus:ring-1 focus:ring-accent outline-none transition-all"
-                                        placeholder="Enter your email"
+                                        className="w-full bg-[#fbf9f6] border border-gray-200/70 px-3.5 py-3 text-sm focus:border-accent focus:bg-white outline-none transition-all rounded-xs"
+                                        placeholder="Your email"
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="text-[10px] uppercase tracking-widest text-gray-400 mb-2 block">Subject</label>
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-1.5 block">Subject *</label>
                                 <input
                                     type="text"
                                     name="subject"
                                     required
                                     value={formData.subject}
                                     onChange={handleChange}
-                                    className="w-full bg-secondary border-none px-4 py-3 text-sm focus:ring-1 focus:ring-accent outline-none transition-all"
-                                    placeholder="Order related / General inquiry"
+                                    className="w-full bg-[#fbf9f6] border border-gray-200/70 px-3.5 py-3 text-sm focus:border-accent focus:bg-white outline-none transition-all rounded-xs"
+                                    placeholder="Order inquiry / Styling advice"
                                 />
                             </div>
 
                             <div>
-                                <label className="text-[10px] uppercase tracking-widest text-gray-400 mb-2 block">Message</label>
+                                <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-1.5 block">Message *</label>
                                 <textarea
                                     name="message"
                                     required
                                     rows="5"
                                     value={formData.message}
                                     onChange={handleChange}
-                                    className="w-full bg-secondary border-none px-4 py-4 text-sm focus:ring-1 focus:ring-accent outline-none transition-all resize-none"
-                                    placeholder="Write your message here..."
+                                    className="w-full bg-[#fbf9f6] border border-gray-200/70 px-3.5 py-3 text-sm focus:border-accent focus:bg-white outline-none transition-all resize-none rounded-xs"
+                                    placeholder="Write your thoughts or questions here..."
                                 ></textarea>
                             </div>
 
                             {status && (
-                                <div className={`p-4 text-sm ${status.type === 'success' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+                                <div className={`p-3.5 text-xs sm:text-sm rounded-xs ${status.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
                                     {status.message}
                                 </div>
                             )}
@@ -157,22 +161,23 @@ const Contact = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full bg-primary text-white py-4 text-xs uppercase tracking-[0.3em] hover:bg-accent transition-all duration-500 disabled:opacity-50 flex items-center justify-center gap-3 group"
+                                className="w-full btn-primary py-3.5 sm:py-4 text-xs tracking-[0.25em] flex items-center justify-center gap-2"
                             >
                                 {loading ? (
                                     <>
                                         <Loader2 size={16} className="animate-spin" />
-                                        Processing...
+                                        <span>Sending Message...</span>
                                     </>
                                 ) : (
                                     <>
-                                        Submit Message
-                                        <Send size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                        <span>Send Message</span>
+                                        <Send size={13} />
                                     </>
                                 )}
                             </button>
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
